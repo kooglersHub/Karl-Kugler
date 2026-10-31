@@ -1,0 +1,30 @@
+# Website development rules
+
+## Design
+- Follow the established design tokens.
+- Do not introduce new fonts or accent colors casually.
+- Favor editorial composition over generic card grids.
+- Preserve visual consistency across routes.
+- Use real content and authentic project imagery.
+- Treat animation as progressive enhancement.
+
+## Components
+- Prefer native Astro for static content.
+- Use React only for genuinely interactive elements.
+- Review license and dependencies before copying code.
+- Adapt external components to our design system.
+
+## Quality
+- Every change must pass the production build.
+- Visually check modified pages with Playwright.
+- Check mobile and desktop layouts.
+- Preserve keyboard accessibility.
+- Honor reduced-motion preferences.
+- Never invent personal achievements or project metrics.
+
+## Workflow
+- Inspect existing implementations before editing.
+- Make focused, reviewable changes.
+- Avoid unrelated refactoring.
+- Record important architecture decisions.
+- Fix discovered issues before declaring completion.
