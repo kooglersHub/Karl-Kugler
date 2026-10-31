@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SignalLab from '../components/SignalLab.astro';
+---
+
+<BaseLayout
+  title="Lab"
+  description="Small interactive experiments in signals, measurement, and technical ideas."
+>
+  <header class="page-intro container">
+    <span class="eyebrow">SMALL EXPERIMENTS / OPEN QUESTIONS</span>
+    <h1>
+      Room to
+      <br />
+      <em>experiment.</em>
+    </h1>
+    <p class="intro-description">
+      A workbench for ideas you can play with. Small, focused explorations —
+      with the assumptions left visible.
+    </p>
+  </header>
+  <div class="container page-body">
+    <SignalLab />
+    <div class="lab-explanation">
+      <div>
+        <h3>Why sampling matters</h3>
+        <p>
+          A sensor gives you observations at discrete moments. A smooth-looking
+          plot can hide how little was actually observed. Move the controls to
+          see the distinction between the underlying signal and the available
+          samples.
+        </p>
+      </div>
+      <div>
+        <h3>What this model leaves out</h3>
+        <p>
+          This is an educational sine-wave diagram with exact timing and no
+          noise. Real measurement chains also involve bandwidth, filtering,
+          jitter, and quantization. This is not a hardware benchmark or a live
+          HaptIQ measurement.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

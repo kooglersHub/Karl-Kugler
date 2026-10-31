@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Karl Kugler about engineering, software, or a shared curiosity."
+>
+  <header class="page-intro container">
+    <span class="eyebrow">GOOD THINGS START WITH A CONVERSATION</span>
+    <h1>
+      What are you
+      <br />
+      <em>working on?</em>
+    </h1>
+  </header>
+  <section
+    class="container page-body contact-layout"
+    aria-label="Contact details"
+  >
+    <div>
+      <span class="eyebrow">WRITE DIRECTLY</span>
+      <a class="contact-email" href={`mailto:${site.email}`}>
+        {site.email}
+      </a>
+      <p>
+        A project, a technical question, or something you think I should see —
+        feel free to get in touch.
+      </p>
+      <p class="mono">THIS LINK OPENS YOUR EMAIL APP.</p>
+    </div>
+    <div>
+      <a class="profile-link" href={site.github}>
+        <span>
+          GitHub<small>@kooglersHub · Code & projects</small>
+        </span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a class="profile-link" href={site.linkedin}>
+        <span>
+          LinkedIn<small>/in/karl-kugler · Connect</small>
+        </span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a class="profile-link" href="/projects/">
+        <span>
+          The project index<small>Explore the work before saying hello.</small>
+        </span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

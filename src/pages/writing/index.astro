@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatMonthYear } from '../../lib/dates';
+const notes = (await getCollection('writing')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+  title="Writing"
+  description="Technical field notes on engineering, software, and the decisions behind the work."
+>
+  <header class="page-intro container">
+    <span class="eyebrow">NOTES FROM THE WORKBENCH</span>
+    <h1>
+      A place to
+      <br />
+      <em>think it through.</em>
+    </h1>
+    <p class="intro-description">
+      Short essays on building, observing, and making sense of things. Written
+      alongside the work.
+    </p>
+  </header>
+  <section class="container page-body" aria-label="Articles">
+    <div class="note-list">
+      {notes.map((note, index) => (
+        <a class="note-row" href={`/writing/${note.data.slug}/`}>
+          <span class="mono note-number">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div>
+            <span class="eyebrow">{note.data.tags.join(' / ')}</span>
+            <h3>{note.data.title}</h3>
+            <p>{note.data.description}</p>
+          </div>
+          <time class="note-date mono" datetime={note.data.date.toISOString()}>
+            {formatMonthYear(note.data.date)}
+          </time>
+          <span class="note-arrow" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

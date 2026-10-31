@@ -1,0 +1,41 @@
+---
+slug: evolab
+title: EvoLab
+description: A small world for big questions. Exploring inherited neural controllers, changing environments, and artificial life.
+category: Artificial life
+technologies: [C++17, Godot, Neural controllers]
+year: 2026
+status: Experimental
+featuredOrder: 2
+visual: life
+---
+
+## A world that can be questioned
+
+EvoLab explores digital organisms and the rules that shape their behavior. The current native application keeps biological rules, neural controllers, and world state in a C++17 core; Godot handles presentation and interaction.
+
+Organisms interact with resources, energy costs, terrain, seasons, and reproduction. The interesting question is not whether a moving creature looks alive. It is which mechanisms explain the behavior that can actually be observed.
+
+## Separate evolution from learning
+
+In the standard world, controllers change through inheritance, mutation, and selection. An optional experimental mode allows individual organisms to adjust control parameters during their own lives. Those acquired adjustments are not inherited by their children.
+
+Keeping these mechanisms distinct makes it possible to ask different questions of each. A control change is observable; a useful improvement still needs a comparison.
+
+## Build tools for observation
+
+The laboratory brings together an organism inspector, neural view, ancestry, histories, interventions, and A/B comparisons. Recorded parentage and death causes remain inspectable; unknown history stays unknown.
+
+World controls separate parameters that affect the running world from starting conditions that apply to a new one. That distinction helps avoid attributing a changed population to a rule that only changed the next setup.
+
+## An experiment needs a reference
+
+Control groups make apparent progress easier to challenge. Signal experiments distinguish receiving a signal from paying the cost of sending one. Individual learning experiments compare parameter updates against matched exploration and costs.
+
+The project documentation reports that an early signal comparison found no reception benefit. Individual learning has not established convincing transfer benefits on nature maps. These are useful limits on interpretation, rather than reasons to replace a result with a stronger story.
+
+## Current scope
+
+This is an experimental artificial-life system, not a validated model of biological evolution. Results depend on world rules and repeated independent runs. A successful trajectory does not establish a general outcome.
+
+The project is currently in a private repository. The population artwork on this website is an original **conceptual illustration**, not a screenshot or measurement from the application. The case-study summary follows the repository’s current native README; historical Python reference results are not presented as native application results.

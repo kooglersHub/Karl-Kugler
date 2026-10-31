@@ -1,0 +1,44 @@
+[
+  {
+    "page": "home",
+    "url": "http://127.0.0.1:4321/",
+    "toolVersion": "13.6.0",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "performance": 98.0,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 66.0,
+    "lcp": "1.7 s",
+    "cls": 0.07260700713866991,
+    "totalBlockingTime": "100 ms",
+    "note": "Local preview deliberately blocked from indexing until SITE_URL is configured."
+  },
+  {
+    "page": "project",
+    "url": "http://127.0.0.1:4321/projects/haptiq-hand/",
+    "toolVersion": "13.6.0",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "performance": 98.0,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 66.0,
+    "lcp": "0.8 s",
+    "cls": 0.0885049855022341,
+    "totalBlockingTime": "0 ms",
+    "note": "Local preview deliberately blocked from indexing until SITE_URL is configured."
+  },
+  {
+    "page": "lab",
+    "url": "http://127.0.0.1:4321/lab/",
+    "toolVersion": "13.6.0",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+    "performance": 100,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 63.0,
+    "lcp": "0.8 s",
+    "cls": 0.001998453055080559,
+    "totalBlockingTime": "0 ms",
+    "note": "Local preview deliberately blocked from indexing until SITE_URL is configured."
+  }
+]

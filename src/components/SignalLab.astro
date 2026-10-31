@@ -1,0 +1,178 @@
+---
+const curve = Array.from(
+  { length: 401 },
+  (_, i) =>
+    `${i === 0 ? 'M' : 'L'}${40 + i * 2},${150 - Math.sin((i / 400) * 4 * Math.PI) * 88}`,
+).join(' ');
+---
+
+<section class="signal-lab" aria-labelledby="signal-title">
+  <div class="lab-heading">
+    <div>
+      <span class="eyebrow">EXPERIMENT 01 / SIGNALS & SAMPLES</span>
+      <h2 id="signal-title">Between the points.</h2>
+    </div>
+    <p>
+      How much of a signal do you see? Change the sample rate and watch the
+      evidence become sparse.
+    </p>
+  </div>
+  <div class="signal-display">
+    <div class="signal-legend mono">
+      <span>— CONTINUOUS SIGNAL</span>
+      <span>● DISCRETE SAMPLES</span>
+      <span>IDEALIZED / NO NOISE</span>
+    </div>
+    <svg
+      viewBox="0 0 880 300"
+      role="img"
+      aria-label="A continuous sine wave and its discrete samples"
+      id="signal-plot"
+    >
+      <defs>
+        <pattern
+          id="signal-grid"
+          width="40"
+          height="50"
+          patternUnits="userSpaceOnUse"
+        >
+          <path
+            d="M40 0H0V50"
+            fill="none"
+            stroke="#9aaf8a"
+            stroke-opacity=".17"
+            stroke-width="1"
+          />
+        </pattern>
+      </defs>
+      <rect x="40" y="30" width="800" height="240" fill="url(#signal-grid)" />
+      <path d="M40 150H840" stroke="#9aaf8a" stroke-opacity=".35" />
+      <path
+        id="signal-curve"
+        d={curve}
+        fill="none"
+        stroke="#bacfa6"
+        stroke-width="2"
+      />
+      <g id="signal-samples" fill="#e2b893" stroke="#e2b893">
+        {Array.from({ length: 25 }, (_, i) => {
+          const x = 40 + (i / 24) * 800;
+          const y = 150 - Math.sin((i / 24) * 4 * Math.PI) * 88;
+          return (
+            <g>
+              <path d={`M${x} 150V${y}`} opacity=".4" />
+              <circle cx={x} cy={y} r="4" />
+            </g>
+          );
+        })}
+      </g>
+      <g fill="#c3ceb9" font-family="monospace" font-size="10">
+        <text x="40" y="290">
+          0 s
+        </text>
+        <text x="810" y="290">
+          1 s
+        </text>
+        <text x="14" y="65">
+          +1
+        </text>
+        <text x="17" y="155">
+          0
+        </text>
+        <text x="14" y="242">
+          −1
+        </text>
+      </g>
+    </svg>
+  </div>
+  <div class="signal-controls" hidden>
+    <div>
+      <label for="frequency">
+        Signal frequency
+        <output id="frequency-value" for="frequency">
+          2 Hz
+        </output>
+      </label>
+      <input id="frequency" type="range" min="1" max="12" value="2" step="1" />
+    </div>
+    <div>
+      <label for="sample-rate">
+        Sample rate
+        <output id="sample-value" for="sample-rate">
+          24 samples/s
+        </output>
+      </label>
+      <input
+        id="sample-rate"
+        type="range"
+        min="4"
+        max="64"
+        value="24"
+        step="1"
+      />
+    </div>
+  </div>
+  <p class="signal-readout" role="status" aria-live="polite">
+    An ideal 2 Hz sine wave sampled 24 times per second. The samples are above
+    the Nyquist threshold.
+  </p>
+  <noscript>
+    <p class="signal-readout">
+      JavaScript is off. This static example shows a 2 Hz wave sampled 24 times
+      per second.
+    </p>
+  </noscript>
+</section>
+<script>
+  const frequency = document.querySelector<HTMLInputElement>('#frequency');
+  const sampleRate = document.querySelector<HTMLInputElement>('#sample-rate');
+  const curve = document.querySelector('#signal-curve');
+  const samples = document.querySelector('#signal-samples');
+  const controls = document.querySelector<HTMLElement>('.signal-controls');
+  function updateSignal() {
+    if (!frequency || !sampleRate || !curve || !samples) return;
+    const hz = Number(frequency.value);
+    const rate = Number(sampleRate.value);
+    const signalY = (t: number) => 150 - Math.sin(t * hz * 2 * Math.PI) * 88;
+    curve.setAttribute(
+      'd',
+      Array.from(
+        { length: 801 },
+        (_, i) => `${i === 0 ? 'M' : 'L'}${40 + i},${signalY(i / 800)}`,
+      ).join(' '),
+    );
+    const nodes = Array.from({ length: rate + 1 }, (_, i) => {
+      const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const stem = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'path',
+      );
+      const point = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'circle',
+      );
+      const x = 40 + (i / rate) * 800;
+      const y = signalY(i / rate);
+      stem.setAttribute('d', `M${x} 150V${y}`);
+      stem.setAttribute('opacity', '.4');
+      point.setAttribute('cx', String(x));
+      point.setAttribute('cy', String(y));
+      point.setAttribute('r', '4');
+      group.append(stem, point);
+      return group;
+    });
+    samples.replaceChildren(...nodes);
+    const frequencyValue = document.querySelector('#frequency-value');
+    const sampleValue = document.querySelector('#sample-value');
+    const status = document.querySelector('.signal-readout');
+    if (frequencyValue) frequencyValue.textContent = `${hz} Hz`;
+    if (sampleValue) sampleValue.textContent = `${rate} samples/s`;
+    if (status)
+      status.textContent = `${hz} Hz · ${rate} samples/s. ${rate > hz * 2 ? 'Above the Nyquist threshold: enough samples for this ideal band-limited signal.' : rate === hz * 2 ? 'At the Nyquist threshold: this phase can produce zero-valued samples. A higher rate is needed.' : 'Below the Nyquist threshold: different continuous signals can produce the same samples (aliasing).'}`;
+  }
+  if (controls && frequency && sampleRate) {
+    controls.hidden = false;
+    frequency.addEventListener('input', updateSignal);
+    sampleRate.addEventListener('input', updateSignal);
+  }
+</script>

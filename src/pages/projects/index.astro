@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectPreview from '../../components/ProjectPreview.astro';
+const projects = (await getCollection('projects')).sort(
+  (a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99),
+);
+const categories = [
+  'All projects',
+  ...new Set(projects.map((project) => project.data.category)),
+];
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected explorations in robotics, software, and artificial life by Karl Kugler."
+>
+  <div class="page-intro container">
+    <span class="eyebrow">
+      THE PROJECT INDEX / {String(projects.length).padStart(2, '0')}{' '}
+      EXPLORATIONS
+    </span>
+    <h1>
+      Built to
+      <br />
+      <em>find out.</em>
+    </h1>
+    <p class="intro-description">
+      Software, physical systems, and questions worth following. A closer look
+      at the work and the decisions behind it.
+    </p>
+  </div>
+  <section class="page-body container" aria-label="Project collection">
+    <div class="filters" hidden aria-label="Filter by category">
+      {categories.map((category, index) => (
+        <button type="button" data-filter={category} aria-pressed={index === 0}>
+          {category}
+        </button>
+      ))}
+      <span class="filter-status mono" role="status" aria-live="polite">
+        {projects.length} projects
+      </span>
+    </div>
+    <div class="projects-grid">
+      {projects.map((project, index) => (
+        <ProjectPreview project={project} index={index} />
+      ))}
+    </div>
+    <p class="project-empty" hidden>
+      No projects in this category yet.
+    </p>
+  </section>
+  <script>
+    const filters = document.querySelector<HTMLElement>('.filters');
+    if (filters) {
+      filters.hidden = false;
+      const buttons = [
+        ...filters.querySelectorAll<HTMLButtonElement>('[data-filter]'),
+      ];
+      const projects = [
+        ...document.querySelectorAll<HTMLElement>('[data-category]'),
+      ];
+      for (const button of buttons)
+        button.addEventListener('click', () => {
+          let count = 0;
+          for (const project of projects) {
+            project.hidden =
+              button.dataset.filter !== 'All projects' &&
+              project.dataset.category !== button.dataset.filter;
+            if (!project.hidden) count++;
+          }
+          for (const item of buttons)
+            item.setAttribute('aria-pressed', String(item === button));
+          const status = filters.querySelector('[role="status"]');
+          if (status)
+            status.textContent = `${count} ${count === 1 ? 'project' : 'projects'}`;
+          const empty = document.querySelector<HTMLElement>('.project-empty');
+          if (empty) empty.hidden = count !== 0;
+        });
+    }
+  </script>
+</BaseLayout>

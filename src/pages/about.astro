@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="Karl Kugler’s explorations across software, robotics, electronics, and artificial life."
+>
+  <header class="page-intro container">
+    <span class="eyebrow">A LITTLE CONTEXT</span>
+    <h1>
+      Hi, I’m Karl<span class="accent">.</span>
+      <br />
+      <em>I like figuring things out.</em>
+    </h1>
+  </header>
+  <section class="container page-body">
+    <div class="about-grid">
+      <div class="about-monogram" aria-hidden="true">
+        <span>k.</span>
+        <span class="eyebrow">A WORKBENCH, NOT A FINISH LINE.</span>
+      </div>
+      <div class="about-copy">
+        <h2>
+          Somewhere between
+          <br />
+          code and the real world.
+        </h2>
+        <p>
+          This is a home for my projects and the questions that run through
+          them: how to make physical measurements inspectable, how simple rules
+          shape a simulated world, and how to build useful software around both.
+        </p>
+        <p>
+          The work crosses software, electronics, robotics, and AI. I’m
+          interested in the details that make a system understandable — clear
+          boundaries, visible state, and honest explanations of what a result
+          can and cannot show.
+        </p>
+        <p>
+          Here you’ll find a tactile hand viewer, an artificial-life laboratory,
+          and technical notes that follow the work. Each project has its own
+          story; the common thread is learning by making.
+        </p>
+        <a class="text-link mt-6" href="/projects/">
+          Take a look at the work <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="capabilities">
+      <div>
+        <span class="eyebrow">01 / PHYSICAL SYSTEMS</span>
+        <h3>Make it observable.</h3>
+        <p>
+          Robotic hand telemetry, tactile data, articulated visualization, and
+          the boundary between a measurement and its interpretation.
+        </p>
+      </div>
+      <div>
+        <span class="eyebrow">02 / SOFTWARE</span>
+        <h3>Make it understandable.</h3>
+        <p>
+          Python, JavaScript, C++, and browser interfaces. Modular tools that
+          connect data, behavior, and a useful view of the system.
+        </p>
+      </div>
+      <div>
+        <span class="eyebrow">03 / EXPERIMENTS</span>
+        <h3>Keep asking.</h3>
+        <p>
+          Artificial life, inherited neural controllers, and controlled
+          comparisons. Interesting behavior is a starting point for
+          investigation.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

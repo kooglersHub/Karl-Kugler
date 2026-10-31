@@ -13,11 +13,11 @@ Audit date: 2026-11-01. This document records investigation, not an implemented 
 
 Package manifests, licenses and Case's collection/configuration source were fetched directly from the repositories.
 
-| Reference | License | Observed architecture | Useful direction | Redesign / omit |
-| --- | --- | --- | --- | --- |
-| [Case](https://github.com/erlandv/case) | MIT, copyright 2025 Erland | Astro ^5.16.7, MDX ^4.0.0, sitemap, Sharp; static output, glob-loaded typed collections | Case-study-first routing, separate article/case-study layouts, MDX content and engineering decision narratives | Replace visual shell; simplify seven collections to projects and writing; omit all sample biographies, outcomes and testimonials |
-| [Astro Nano](https://github.com/markhorn-dev/astro-nano) | MIT, copyright 2024–2025 Mark Horn | Astro ^5.0.5, MDX, Tailwind 3, no client UI framework | Restrained navigation, reading experience, minimal hydration | Do not adopt its narrow, uniform composition or legacy Tailwind integration |
-| [Astrofy](https://github.com/manuelernestog/astrofy) | MIT, copyright 2022 Manuel Ernesto Garcia | Astro ^4.0.2, Tailwind 3, DaisyUI 4 | Profile/CV information hierarchy | Omit store, DaisyUI sidebar/card styling and unnecessary dependencies |
+| Reference                                                | License                                   | Observed architecture                                                                   | Useful direction                                                                                               | Redesign / omit                                                                                                                  |
+| -------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [Case](https://github.com/erlandv/case)                  | MIT, copyright 2025 Erland                | Astro ^5.16.7, MDX ^4.0.0, sitemap, Sharp; static output, glob-loaded typed collections | Case-study-first routing, separate article/case-study layouts, MDX content and engineering decision narratives | Replace visual shell; simplify seven collections to projects and writing; omit all sample biographies, outcomes and testimonials |
+| [Astro Nano](https://github.com/markhorn-dev/astro-nano) | MIT, copyright 2024–2025 Mark Horn        | Astro ^5.0.5, MDX, Tailwind 3, no client UI framework                                   | Restrained navigation, reading experience, minimal hydration                                                   | Do not adopt its narrow, uniform composition or legacy Tailwind integration                                                      |
+| [Astrofy](https://github.com/manuelernestog/astrofy)     | MIT, copyright 2022 Manuel Ernesto Garcia | Astro ^4.0.2, Tailwind 3, DaisyUI 4                                                     | Profile/CV information hierarchy                                                                               | Omit store, DaisyUI sidebar/card styling and unnecessary dependencies                                                            |
 
 Recommendation: use Case as the single base architecture, retaining its MIT notice wherever source is adapted. Nano and Astrofy remain references, not additional copied bases. Case needs dependency/API compatibility work rather than blind template installation.
 
@@ -25,15 +25,15 @@ Recommendation: use Case as the single base architecture, retaining its MIT noti
 
 The npm registry's `latest` metadata returned the following during this audit. These versions are observations, not an installed or tested dependency set.
 
-| Package | Version | License |
-| --- | --- | --- |
-| astro | 7.4.4 | MIT |
-| @astrojs/mdx | 8.1.2 | MIT |
-| @astrojs/check | 0.9.12 | MIT |
-| @astrojs/sitemap | 3.7.4 | MIT |
-| tailwindcss | 4.3.3 | MIT |
-| @tailwindcss/vite | 4.3.3 | MIT |
-| typescript | 7.0.2 | Apache-2.0 |
+| Package           | Version | License    |
+| ----------------- | ------- | ---------- |
+| astro             | 7.4.4   | MIT        |
+| @astrojs/mdx      | 8.1.2   | MIT        |
+| @astrojs/check    | 0.9.12  | MIT        |
+| @astrojs/sitemap  | 3.7.4   | MIT        |
+| tailwindcss       | 4.3.3   | MIT        |
+| @tailwindcss/vite | 4.3.3   | MIT        |
+| typescript        | 7.0.2   | Apache-2.0 |
 
 Astro/MDX report Node >=22.23.4. Select and lock a mutually compatible set after checking peer dependencies; do not infer compatibility from latest tags alone. No packages have been installed yet.
 

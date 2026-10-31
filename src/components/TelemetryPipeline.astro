@@ -1,0 +1,23 @@
+---
+const steps = [
+  { title: 'Acquire', description: 'Passive Modbus telemetry' },
+  { title: 'Inspect', description: 'Live viewer or recorded capture' },
+  { title: 'Freeze', description: 'A defined measurement snapshot' },
+  { title: 'Compare', description: 'Candidate CAD placements' },
+];
+---
+
+<figure class="telemetry-pipeline" aria-label="HaptIQ measurement pipeline">
+  <span class="eyebrow">FROM OBSERVATION TO ESTIMATION</span>
+  <ol>
+    {steps.map((step, index) => (
+      <li>
+        <span class="mono">0{index + 1}</span>
+        <div>
+          <strong>{step.title}</strong>
+          <p>{step.description}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</figure>
