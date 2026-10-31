@@ -43,7 +43,7 @@ A read-only reviewer checked routing, metadata, interactions, sampling semantics
 
 ## Delivery limits
 
-- The user created `kooglersHub/Karl-Kugler`, and it is configured as `origin`.
+- The user created `kooglersHub/Karl-Kugler`, configured as `origin`. The implementation was pushed to `main`; the remote SHA was verified against the local commit. GitHub Actions started automatically.
 - Cloudflare remains the requested hosting destination. No Cloudflare plugin or authenticated CLI configuration was available. Computer Use ended because the current Windows Firefox browser does not support the runtime's required URL-policy enforcement; no further UI automation was attempted.
 - Cloudflare Git integration should use `main`, `npm run build`, output `dist`, Node 24 and the actual canonical SITE_URL. CI is configured in the repository; this record does not assert a remote workflow result.
 - A fuller personal biography, approved portrait/CV and additional authentic project media were not supplied. Those are omitted rather than fabricated. EvoLab's repository remains private, and its website image is explicitly conceptual.

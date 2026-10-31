@@ -41,12 +41,14 @@ Project slugs are explicit frontmatter values. Project media, galleries and exte
 
 ## Publish on Cloudflare Pages
 
-1. Push this repository to the intended GitHub repository and connect it to a Cloudflare Pages project.
+1. In Cloudflare **Workers & Pages → Create application → Pages → Import an existing Git repository**, select [`kooglersHub/Karl-Kugler`](https://github.com/kooglersHub/Karl-Kugler) and production branch `main`.
 2. Build command: `npm run build`; output directory: `dist`.
 3. Select Node 24 and set `SITE_URL` to the real canonical HTTPS origin, without a path.
 4. Run a fresh build and deploy the resulting static directory.
 
 No Cloudflare adapter or Worker runtime is needed for static output. `_headers` supplies basic browser security headers. Do not add an SPA catch-all redirect: Astro generates real HTML routes and `404.html`.
+
+These build settings follow the [official Cloudflare Astro deployment guide](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/). Once connected, Pages rebuilds automatically on pushes to `main`.
 
 Without `SITE_URL`, builds deliberately emit `noindex, nofollow`, disallow crawling in `robots.txt`, and omit sitemap/canonical URLs. A configured build enables indexing and sitemap generation. Do not use a temporary preview domain as the production canonical.
 
