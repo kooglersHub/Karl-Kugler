@@ -1,41 +1,41 @@
 ---
 slug: evolab
 title: EvoLab
-description: A small world for big questions. Exploring inherited neural controllers, changing environments, and artificial life.
-category: Artificial life
-technologies: [C++17, Godot, Neural controllers]
+description: Eine kleine Welt für große Fragen. Vererbte neuronale Steuerungen, veränderliche Umgebungen und künstliches Leben.
+category: Künstliches Leben
+technologies: [C++17, Godot, Neuronale Steuerung]
 year: 2026
-status: Experimental
-featuredOrder: 2
+status: Experimentell
+featuredOrder: 3
 visual: life
 ---
 
-## A world that can be questioned
+## Eine Welt, die Fragen zulässt
 
-EvoLab explores digital organisms and the rules that shape their behavior. The current native application keeps biological rules, neural controllers, and world state in a C++17 core; Godot handles presentation and interaction.
+EvoLab untersucht digitale Organismen und die Regeln, die ihr Verhalten prägen. In der aktuellen nativen Anwendung laufen biologische Regeln, neuronale Steuerung und Weltzustand im C++17-Kern. Godot übernimmt Darstellung und Eingaben.
 
-Organisms interact with resources, energy costs, terrain, seasons, and reproduction. The interesting question is not whether a moving creature looks alive. It is which mechanisms explain the behavior that can actually be observed.
+Die Organismen treffen auf Ressourcen, Energiekosten, Gelände, Jahreszeiten und Fortpflanzung. Interessant ist nicht allein, ob ein bewegtes Wesen lebendig wirkt, sondern welche Mechanismen sein beobachtbares Verhalten erklären.
 
-## Separate evolution from learning
+## Evolution und Lernen auseinanderhalten
 
-In the standard world, controllers change through inheritance, mutation, and selection. An optional experimental mode allows individual organisms to adjust control parameters during their own lives. Those acquired adjustments are not inherited by their children.
+In der Standardwelt verändern sich Steuerungen durch Vererbung, Mutation und Selektion. Ein optionaler Versuchsmodus lässt einzelne Organismen während ihres Lebens eigene Steuerparameter anpassen. Diese erworbenen Änderungen vererben ihre Kinder nicht.
 
-Keeping these mechanisms distinct makes it possible to ask different questions of each. A control change is observable; a useful improvement still needs a comparison.
+Diese Trennung erlaubt unterschiedliche Fragen. Eine Parameteränderung lässt sich beobachten; ein nützlicher Fortschritt muss weiterhin durch einen Vergleich geprüft werden.
 
-## Build tools for observation
+## Werkzeuge zum Hinsehen
 
-The laboratory brings together an organism inspector, neural view, ancestry, histories, interventions, and A/B comparisons. Recorded parentage and death causes remain inspectable; unknown history stays unknown.
+Das Labor verbindet Organismusinspektor, Gehirnansicht, Abstammung, Verläufe, Eingriffe und A/B-Vergleiche. Verzeichnete Herkunft und Todesursachen bleiben einsehbar. Unbekannte Geschichte bleibt unbekannt.
 
-World controls separate parameters that affect the running world from starting conditions that apply to a new one. That distinction helps avoid attributing a changed population to a rule that only changed the next setup.
+Die Weltsteuerung unterscheidet laufende Regeln von Anfangsbedingungen für eine neue Welt. So wird ein Effekt nicht einer Änderung zugeschrieben, die die aktuelle Population gar nicht betrifft.
 
-## An experiment needs a reference
+## Ein Experiment braucht eine Referenz
 
-Control groups make apparent progress easier to challenge. Signal experiments distinguish receiving a signal from paying the cost of sending one. Individual learning experiments compare parameter updates against matched exploration and costs.
+Kontrollgruppen helfen, scheinbaren Fortschritt zu hinterfragen. Signalversuche unterscheiden den Empfang eines Signals von den Energiekosten des Sendens. Lernversuche vergleichen Gewichtsänderungen mit vergleichbarer Erkundung und vergleichbaren Kosten.
 
-The project documentation reports that an early signal comparison found no reception benefit. Individual learning has not established convincing transfer benefits on nature maps. These are useful limits on interpretation, rather than reasons to replace a result with a stronger story.
+Die Projektdokumentation berichtet für einen frühen Signalvergleich keinen Empfangsvorteil. Ein überzeugender individueller Übertragungsnutzen auf Naturkarten ist bislang nicht belegt. Diese Grenzen gehören zur Interpretation der Ergebnisse.
 
-## Current scope
+## Aktueller Umfang
 
-This is an experimental artificial-life system, not a validated model of biological evolution. Results depend on world rules and repeated independent runs. A successful trajectory does not establish a general outcome.
+EvoLab ist ein experimentelles System für künstliches Leben, kein validiertes Modell biologischer Evolution. Ergebnisse hängen von Weltregeln und wiederholten unabhängigen Läufen ab. Ein erfolgreicher Verlauf belegt noch keinen allgemeinen Zusammenhang.
 
-The project is currently in a private repository. The population artwork on this website is an original **conceptual illustration**, not a screenshot or measurement from the application. The case-study summary follows the repository’s current native README; historical Python reference results are not presented as native application results.
+Das Repository ist privat. Die Grafik auf dieser Website ist eine **Konzeptzeichnung**, kein Screenshot und kein Messergebnis. Die Beschreibung folgt der aktuellen nativen README; historische Ergebnisse der Python-Referenz werden nicht als Ergebnisse der nativen Anwendung ausgegeben.

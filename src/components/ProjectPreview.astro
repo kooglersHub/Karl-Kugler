@@ -5,61 +5,36 @@ import LifeDiagram from './LifeDiagram.astro';
 interface Props {
   project: CollectionEntry<'projects'>;
   index?: number;
-  prominent?: boolean;
 }
-const { project, index = 0, prominent = false } = Astro.props;
+const { project } = Astro.props;
 const data = project.data;
 ---
 
-<article
-  class:list={['project-preview', { prominent }]}
-  data-category={data.category}
->
-  <a
-    class:list={['project-visual', `visual-${data.visual}`]}
-    href={`/projects/${data.slug}/`}
-  >
-    <div class="visual-top mono">
-      <span>
-        {data.category.toUpperCase()} / {String(index + 1).padStart(2, '0')}
-      </span>
-      <span>{data.status.toUpperCase()}</span>
-    </div>
-    {data.visual === 'hand' && data.cover ? (
-      <div class="hand-viewport">
-        <Image
-          src={data.cover}
-          alt={data.coverAlt || data.title}
-          widths={[480, 800, 1200, 1500]}
-          sizes={
-            prominent
-              ? '(max-width: 760px) 100vw, 70vw'
-              : '(max-width: 760px) 100vw, 50vw'
-          }
-          format="webp"
-          loading={prominent ? 'eager' : 'lazy'}
-          class="hand-image"
-        />
-      </div>
+<article class="project-preview" data-category={data.category} data-reveal>
+  <a class="project-visual" href={`/projects/${data.slug}/`}>
+    {data.cover ? (
+      <Image
+        src={data.cover}
+        alt={data.coverAlt || data.title}
+        widths={[480, 800, 1200, 1500]}
+        sizes="(max-width: 760px) 100vw, 48vw"
+        format="webp"
+        loading="lazy"
+      />
     ) : (
       <LifeDiagram compact />
     )}
-    <span class="visual-wordmark" aria-hidden="true">
-      {data.visual === 'hand' ? 'HaptIQ' : 'EvoLab'}
-      <span> {data.visual === 'hand' ? 'HAND' : 'ARTIFICIAL LIFE'}</span>
-    </span>
-    <span class="visual-arrow" aria-hidden="true">
-      ↗
-    </span>
   </a>
   <div class="project-caption">
     <div>
-      <p class="eyebrow">{data.technologies.join(' / ')}</p>
+      <span class="eyebrow">
+        {data.category} / {data.status}
+      </span>
       <h3>
         <a href={`/projects/${data.slug}/`}>{data.title}</a>
       </h3>
       <p>{data.description}</p>
     </div>
-    <span class="mono project-year">{data.year}</span>
+    <span class="project-year mono">{data.year}</span>
   </div>
 </article>

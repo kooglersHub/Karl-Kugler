@@ -14,6 +14,12 @@ This site adapts the static Astro + MDX + sitemap architecture and typed glob-lo
 - The lab's signal plot is original SVG/code and explicitly educational. It represents no actual hardware data.
 - The two articles are newly drafted technical notes, grounded in project documentation and this implementation. They are not copied published articles or invented experimental reports.
 
+- `src/assets/little-detours-fern.webp` is an AI-generated concept based on Karl’s own little detours design; it is not a product photograph.
+
+## Icons
+
+The arrow icons in `src/assets/icons/` are from [Tabler Icons](https://tabler.io/icons), MIT licensed. The full license is in `public/tabler-license.txt`.
+
 ## Fonts
 
 Self-hosted Fontsource packages: **Instrument Serif**, **DM Sans**, **IBM Plex Mono**. Each package reports **SIL Open Font License 1.1**. Their license files are included with installed dependencies. The corresponding font notice is also shipped in `public/font-licenses.txt`.

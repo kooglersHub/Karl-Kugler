@@ -1,78 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
+import { services } from '../lib/services';
+import { site } from '../config';
 ---
 
-<BaseLayout
-  title="About"
-  description="Karl Kugler’s explorations across software, robotics, electronics, and artificial life."
->
-  <header class="page-intro container">
-    <span class="eyebrow">A LITTLE CONTEXT</span>
+<BaseLayout title="Über mich">
+  <header class="page-intro about-intro container">
+    <span class="eyebrow">KARL KUGLER / KARLSRUHE</span>
     <h1>
-      Hi, I’m Karl<span class="accent">.</span>
+      Neugierig im Kopf.
       <br />
-      <em>I like figuring things out.</em>
+      Praktisch bei der Sache.
     </h1>
   </header>
   <section class="container page-body">
-    <div class="about-grid">
-      <div class="about-monogram" aria-hidden="true">
-        <span>k.</span>
-        <span class="eyebrow">A WORKBENCH, NOT A FINISH LINE.</span>
-      </div>
+    <div class="about-grid" data-reveal>
+      <aside class="about-facts">
+        <div>
+          <span class="eyebrow">MEINE BASIS</span>
+          <strong>Karlsruhe</strong>
+        </div>
+        <div>
+          <span class="eyebrow">SPRACHEN</span>
+          <strong>Deutsch · Englisch</strong>
+          <p>Muttersprache · fließend</p>
+        </div>
+        <div>
+          <span class="eyebrow">DIGITAL & VOR ORT</span>
+          <strong>Freelance-Anfragen</strong>
+          <p>Umfang und Termine nach Absprache.</p>
+        </div>
+      </aside>
       <div class="about-copy">
         <h2>
-          Somewhere between
+          Ich mag Aufgaben,
           <br />
-          code and the real world.
+          in die man sich reindenken kann.
         </h2>
         <p>
-          This is a home for my projects and the questions that run through
-          them: how to make physical measurements inspectable, how simple rules
-          shape a simulated world, and how to build useful software around both.
+          Ich bin Karl. Ich beschäftige mich mit Software, Elektronik, Robotik
+          und der Frage, wie aus einer Idee etwas Greifbares wird. Dazu gehören
+          Websites ebenso wie technische Experimente.
         </p>
         <p>
-          The work crosses software, electronics, robotics, and AI. I’m
-          interested in the details that make a system understandable — clear
-          boundaries, visible state, and honest explanations of what a result
-          can and cannot show.
+          Meine Projekte zeigen unterschiedliche Seiten davon: HaptIQ macht
+          taktile Daten einer robotischen Hand sichtbar. EvoLab untersucht
+          künstliches Leben. Mit little detours entwickle ich Motive und eine
+          eigene Website für ein T-Shirt-Projekt.
         </p>
         <p>
-          Here you’ll find a tactile hand viewer, an artificial-life laboratory,
-          and technical notes that follow the work. Each project has its own
-          story; the common thread is learning by making.
+          Ich unterstütze auch vor Ort: bei Messen, bei der Präsentation von
+          Produkten und als Host auf Veranstaltungen. Dabei kann ich mich auf
+          Deutsch als Muttersprache und fließendes Englisch stützen.
         </p>
-        <a class="text-link mt-6" href="/projects/">
-          Take a look at the work <span aria-hidden="true">↗</span>
+        <p>
+          Du brauchst jemanden für eine konkrete Aufgabe? Schreib mir, worum es
+          geht. Wir klären gemeinsam, welche Unterstützung sinnvoll ist und ob
+          die Rahmenbedingungen passen.
+        </p>
+        <a class="text-link" href="/contact/">
+          Zusammenarbeiten
+          <Arrow />
         </a>
       </div>
     </div>
-    <div class="capabilities">
-      <div>
-        <span class="eyebrow">01 / PHYSICAL SYSTEMS</span>
-        <h3>Make it observable.</h3>
-        <p>
-          Robotic hand telemetry, tactile data, articulated visualization, and
-          the boundary between a measurement and its interpretation.
-        </p>
-      </div>
-      <div>
-        <span class="eyebrow">02 / SOFTWARE</span>
-        <h3>Make it understandable.</h3>
-        <p>
-          Python, JavaScript, C++, and browser interfaces. Modular tools that
-          connect data, behavior, and a useful view of the system.
-        </p>
-      </div>
-      <div>
-        <span class="eyebrow">03 / EXPERIMENTS</span>
-        <h3>Keep asking.</h3>
-        <p>
-          Artificial life, inherited neural controllers, and controlled
-          comparisons. Interesting behavior is a starting point for
-          investigation.
-        </p>
-      </div>
+    <div class="about-services" data-reveal>
+      {services.map((service) => (
+        <a href={`/contact/?anliegen=${service.id}`}>
+          {service.title}
+          <Arrow />
+        </a>
+      ))}
     </div>
+    <a class="text-link mt-8" href={site.shirts}>
+      little detours entdecken
+      <Arrow />
+    </a>
   </section>
 </BaseLayout>

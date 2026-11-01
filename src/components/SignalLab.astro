@@ -9,24 +9,24 @@ const curve = Array.from(
 <section class="signal-lab" aria-labelledby="signal-title">
   <div class="lab-heading">
     <div>
-      <span class="eyebrow">EXPERIMENT 01 / SIGNALS & SAMPLES</span>
-      <h2 id="signal-title">Between the points.</h2>
+      <span class="eyebrow">EXPERIMENT 01 / SIGNALE & ABTASTUNG</span>
+      <h2 id="signal-title">Zwischen den Punkten.</h2>
     </div>
     <p>
-      How much of a signal do you see? Change the sample rate and watch the
-      evidence become sparse.
+      Wie viel von einem Signal siehst du? Ändere die Abtastrate und beobachte,
+      wie aus einer Welle einzelne Messpunkte werden.
     </p>
   </div>
   <div class="signal-display">
     <div class="signal-legend mono">
-      <span>— CONTINUOUS SIGNAL</span>
-      <span>● DISCRETE SAMPLES</span>
-      <span>IDEALIZED / NO NOISE</span>
+      <span>— KONTINUIERLICHES SIGNAL</span>
+      <span>● MESSPUNKTE</span>
+      <span>IDEALISIERT / OHNE RAUSCHEN</span>
     </div>
     <svg
       viewBox="0 0 880 300"
       role="img"
-      aria-label="A continuous sine wave and its discrete samples"
+      aria-label="Eine kontinuierliche Sinuswelle und ihre abgetasteten Messpunkte"
       id="signal-plot"
     >
       <defs>
@@ -88,7 +88,7 @@ const curve = Array.from(
   <div class="signal-controls" hidden>
     <div>
       <label for="frequency">
-        Signal frequency
+        Signalfrequenz
         <output id="frequency-value" for="frequency">
           2 Hz
         </output>
@@ -97,9 +97,9 @@ const curve = Array.from(
     </div>
     <div>
       <label for="sample-rate">
-        Sample rate
+        Abtastrate
         <output id="sample-value" for="sample-rate">
-          24 samples/s
+          24 Messungen/s
         </output>
       </label>
       <input
@@ -113,13 +113,13 @@ const curve = Array.from(
     </div>
   </div>
   <p class="signal-readout" role="status" aria-live="polite">
-    An ideal 2 Hz sine wave sampled 24 times per second. The samples are above
-    the Nyquist threshold.
+    Eine ideale 2-Hz-Sinuswelle mit 24 Messungen pro Sekunde. Die Abtastrate
+    liegt über der Nyquist-Grenze.
   </p>
   <noscript>
     <p class="signal-readout">
-      JavaScript is off. This static example shows a 2 Hz wave sampled 24 times
-      per second.
+      JavaScript ist ausgeschaltet. Dieses statische Beispiel zeigt eine
+      2-Hz-Welle mit 24 Messungen pro Sekunde.
     </p>
   </noscript>
 </section>
@@ -166,9 +166,9 @@ const curve = Array.from(
     const sampleValue = document.querySelector('#sample-value');
     const status = document.querySelector('.signal-readout');
     if (frequencyValue) frequencyValue.textContent = `${hz} Hz`;
-    if (sampleValue) sampleValue.textContent = `${rate} samples/s`;
+    if (sampleValue) sampleValue.textContent = `${rate} Messungen/s`;
     if (status)
-      status.textContent = `${hz} Hz · ${rate} samples/s. ${rate > hz * 2 ? 'Above the Nyquist threshold: enough samples for this ideal band-limited signal.' : rate === hz * 2 ? 'At the Nyquist threshold: this phase can produce zero-valued samples. A higher rate is needed.' : 'Below the Nyquist threshold: different continuous signals can produce the same samples (aliasing).'}`;
+      status.textContent = `${hz} Hz · ${rate} Messungen/s. ${rate > hz * 2 ? 'Über der Nyquist-Grenze: genügend Messpunkte für dieses ideale bandbegrenzte Signal.' : rate === hz * 2 ? 'An der Nyquist-Grenze: Diese Phase kann ausschließlich Nullwerte liefern. Eine höhere Abtastrate ist nötig.' : 'Unter der Nyquist-Grenze: Verschiedene kontinuierliche Signale können dieselben Messpunkte ergeben (Aliasing).'}`;
   }
   if (controls && frequency && sampleRate) {
     controls.hidden = false;

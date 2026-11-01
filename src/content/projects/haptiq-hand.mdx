@@ -1,57 +1,57 @@
 ---
 slug: haptiq-hand
 title: HaptIQ Hand
-description: Making tactile telemetry visible. An articulated hand viewer, recorded grasps, and CAD-based sensor estimation.
-category: Robotics
+description: Taktile Telemetrie sichtbar machen. Ein Hand-Viewer, aufgezeichnete Griffe und CAD-basierte Sensorschätzung.
+category: Robotik
 technologies: [Python, JavaScript, WebGL, Modbus]
 year: 2026
-status: In development
+status: In Entwicklung
 featuredOrder: 1
 cover: ../../assets/haptiq-viewer.png
-coverAlt: HaptIQ History workspace showing a robotic hand with tactile contact points and a provisional sensor fit, using synthetic test data.
+coverAlt: HaptIQ-Viewer mit robotischer Hand, taktilen Messpunkten und vorläufiger Sensorplatzierung. Synthetische Testdaten.
 repositoryUrl: https://github.com/kooglersHub/haptiq-hand
 visual: hand
 ---
 
 import TelemetryPipeline from '../../components/TelemetryPipeline.astro';
 
-## Giving measurements a place
+## Messwerte brauchen einen Ort
 
-A tactile reading becomes more useful when you can locate it on the hand that produced it. HaptIQ connects joint feedback and tactile measurements from an Inspire Robots RH56DFTP to an articulated browser viewer.
+Ein taktiler Messwert wird verständlicher, wenn man ihn auf der Hand verorten kann, die ihn erzeugt hat. HaptIQ verbindet Gelenkrückmeldungen und taktile Daten einer Inspire Robots RH56DFTP mit einem beweglichen Handmodell im Browser.
 
-The application brings live inspection, recorded grasp replay, and CAD-based sensor estimation into a shared workspace. Its passive receiver observes telemetry; physical motion belongs to a separate application.
+Die Anwendung bringt Live-Ansicht, Wiedergabe aufgezeichneter Griffe und CAD-basierte Sensorschätzung zusammen. Der passive Empfänger beobachtet die Telemetrie; physische Bewegungen steuert eine separate Anwendung.
 
-## From incoming data to an inspectable scene
+## Von den Daten zur Ansicht
 
-The pipeline separates acquisition from interpretation. A Modbus receiver reads measurements and publishes them to a local HTTP server. The viewer can follow live readings or open a recording without connected hardware.
+Erfassung und Interpretation bleiben getrennt. Ein Modbus-Empfänger liest Messwerte und veröffentlicht sie an einen lokalen HTTP-Server. Der Viewer kann eingehende Daten verfolgen oder eine Aufzeichnung ohne angeschlossene Hardware öffnen.
 
-Recorded poses provide a way to inspect individual moments and reconstruct accumulated contacts. A frozen measurement snapshot gives the estimator a defined input to work against, rather than a moving target.
+Einzelne Posen lassen sich untersuchen und Kontaktpunkte über einen Griff hinweg rekonstruieren. Die Schätzung arbeitet gegen einen festgehaltenen Messstand, damit klar bleibt, welche Daten einer Platzierung zugrunde liegen.
 
 <TelemetryPipeline />
 
-## Decisions that matter
+## Entscheidungen hinter dem System
 
-### Keep observation separate from control
+### Beobachten und Steuern trennen
 
-Inspecting telemetry should not silently move hardware. Normal receiver startup does not send motion, calibration, or configuration writes. Manual poses change the virtual hand.
+Eine Telemetrieansicht soll nicht unbemerkt Hardware bewegen. Der normale Start des Empfängers sendet keine Bewegungs-, Kalibrierungs- oder Konfigurationsbefehle. Manuelle Posen verändern die virtuelle Hand.
 
-### Freeze the evidence
+### Die Grundlage festhalten
 
-Sensor placement is estimated against a selected snapshot. This keeps the relationship between a measurement, a candidate model, and its fit report inspectable.
+Sensorplatzierungen werden gegen einen ausgewählten Messstand geschätzt. So bleibt die Verbindung zwischen Messung, Kandidatenmodell und Ergebnisbericht nachvollziehbar.
 
-### Keep ambiguity visible
+### Mehrdeutigkeit sichtbar lassen
 
-A promising alignment is not the same thing as a confirmed sensor identity. The estimator compares contact positions, normals, hand limits, and visibility; similar fits retain ambiguity instead of becoming a false certainty.
+Eine plausible Ausrichtung ist noch keine bestätigte Sensoridentität. Die Schätzung berücksichtigt Kontaktpositionen, Normalen, Handgrenzen und Sichtbarkeit. Ähnliche Anpassungen bleiben als mehrdeutig erkennbar.
 
-## What the viewer can show
+## Was sich untersuchen lässt
 
-- Articulated hand geometry and tactile contact fields.
-- Incoming joint feedback and tactile readings.
-- Recorded grasps, individual poses, and reconstructed contacts.
-- Candidate CAD placements and detailed fit reports.
+- Gelenkbewegungen und taktile Kontaktfelder der Hand.
+- Eingehende Rückmeldungen und gespeicherte Messungen.
+- Einzelne Posen und rekonstruierte Kontaktverläufe.
+- Mögliche CAD-Platzierungen und zugehörige Ergebnisberichte.
 
-## Limits and provenance
+## Grenzen und Herkunft
 
-Geometry and taxel placement remain **approximate and uncalibrated**. Open meshes, sampled motion coverage, and finite search all limit physical interpretation. The cover shows synthetic test data and a provisional placement.
+Geometrie und Taxelpositionen sind **näherungsweise und nicht kalibriert**. Offene Netze, begrenzte Bewegungsabdeckung und endliche Suchverfahren begrenzen die physische Interpretation. Das Titelbild zeigt synthetische Testdaten und eine vorläufige Platzierung.
 
-HaptIQ Hand derives from the [original HaptIQ project](https://github.com/rht2001/haptiq). This case study describes the maintained application; it does not claim that every part was created from scratch. Hand geometry, sensor CAD, and reference materials retain their upstream terms. See the repository’s [third-party notices](https://github.com/kooglersHub/haptiq-hand/blob/main/THIRD_PARTY_NOTICES.md).
+HaptIQ Hand baut auf dem [ursprünglichen HaptIQ-Projekt](https://github.com/rht2001/haptiq) auf. Diese Fallstudie beschreibt die weitergeführte Anwendung und behauptet keine alleinige Urheberschaft aller Teile. Für Handgeometrie, Sensor-CAD und Referenzmaterial gelten die ursprünglichen Bedingungen. Details stehen in den [Materialhinweisen des Repositorys](https://github.com/kooglersHub/haptiq-hand/blob/main/THIRD_PARTY_NOTICES.md).

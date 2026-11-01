@@ -1,4 +1,4 @@
-# Karl Kugler — Engineering field journal
+# Karl Kugler — Freelancer aus Karlsruhe
 
 A static, multi-page portfolio built with Astro, TypeScript, MDX, Tailwind CSS and a custom editorial design system. Case supplies the MIT-licensed base architecture; presentation and content are specific to this site.
 
@@ -54,10 +54,10 @@ Without `SITE_URL`, builds deliberately emit `noindex, nofollow`, disallow crawl
 
 ## Content still worth supplying
 
-The site includes two evidence-based case studies and two newly written technical notes. It does not invent employment, education, client work, quantitative outcomes or a CV. A fuller biography, approved portrait/CV, more project photographs, additional case studies and the production domain can be added later. EvoLab's artwork is labeled a conceptual illustration; its repository remains private. LinkedIn uses the path supplied by Karl; automated retrieval was blocked by LinkedIn.
+The site includes three project entries and two newly written technical notes. little detours is presented as a shop preview; the shirt image is an AI-generated concept, not a photograph of a manufactured product. It does not invent employment, education, client work, quantitative outcomes or a CV. A fuller biography, approved portrait/CV, more project photographs, additional case studies and the production domain can be added later. EvoLab's artwork is labeled a conceptual illustration; its repository remains private. LinkedIn uses the path supplied by Karl; automated retrieval was blocked by LinkedIn.
 
 The email comes from the connected GitHub identity. Contact uses a real `mailto:` link; sending depends on the visitor's email application. There is no pretend submission form.
 
 ## Decisions and evidence
 
-See [repository audit](docs/repository-audit.md), [design](docs/superpowers/specs/2026-11-01-portfolio-design.md), [implementation plan](docs/superpowers/plans/2026-11-01-portfolio.md), [validation](docs/validation.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
+See [redesign audit](docs/design/2026-11-01-redesign-audit.md), [selected direction](docs/design/2026-11-01-selected-design.md), [repository audit](docs/repository-audit.md), [design](docs/superpowers/specs/2026-11-01-portfolio-design.md), [implementation plan](docs/superpowers/plans/2026-11-01-portfolio.md), [validation](docs/validation.md) and [third-party notices](THIRD_PARTY_NOTICES.md).

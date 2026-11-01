@@ -1,9 +1,10 @@
 export function formatMonthYear(date: Date): string {
   return date
-    .toLocaleDateString('en-GB', {
+    .toLocaleDateString('de-DE', {
       month: 'short',
       year: 'numeric',
       timeZone: 'UTC',
     })
+    .replace('.', '')
     .toUpperCase();
 }

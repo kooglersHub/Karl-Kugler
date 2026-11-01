@@ -4,40 +4,40 @@ import SignalLab from '../components/SignalLab.astro';
 ---
 
 <BaseLayout
-  title="Lab"
-  description="Small interactive experiments in signals, measurement, and technical ideas."
+  title="Labor"
+  description="Kleine interaktive Experimente zu Signalen, Messungen und technischen Ideen."
 >
   <header class="page-intro container">
-    <span class="eyebrow">SMALL EXPERIMENTS / OPEN QUESTIONS</span>
+    <span class="eyebrow">KLEINE EXPERIMENTE / OFFENE FRAGEN</span>
     <h1>
-      Room to
+      Raum zum
       <br />
-      <em>experiment.</em>
+      <em>Ausprobieren.</em>
     </h1>
     <p class="intro-description">
-      A workbench for ideas you can play with. Small, focused explorations —
-      with the assumptions left visible.
+      Eine Werkstatt für Ideen zum Anfassen. Kleine, gezielte Experimente – mit
+      offen gelegten Annahmen.
     </p>
   </header>
   <div class="container page-body">
     <SignalLab />
     <div class="lab-explanation">
       <div>
-        <h3>Why sampling matters</h3>
+        <h3>Warum Abtastung wichtig ist</h3>
         <p>
-          A sensor gives you observations at discrete moments. A smooth-looking
-          plot can hide how little was actually observed. Move the controls to
-          see the distinction between the underlying signal and the available
-          samples.
+          Ein Sensor liefert Beobachtungen zu einzelnen Zeitpunkten. Eine glatte
+          Kurve kann verdecken, wie wenig tatsächlich gemessen wurde. Mit den
+          Reglern siehst du den Unterschied zwischen dem kontinuierlichen Signal
+          und den verfügbaren Messpunkten.
         </p>
       </div>
       <div>
-        <h3>What this model leaves out</h3>
+        <h3>Was dieses Modell ausblendet</h3>
         <p>
-          This is an educational sine-wave diagram with exact timing and no
-          noise. Real measurement chains also involve bandwidth, filtering,
-          jitter, and quantization. This is not a hardware benchmark or a live
-          HaptIQ measurement.
+          Dies ist ein Lernmodell einer Sinuswelle mit exaktem Timing und ohne
+          Rauschen. Echte Messketten umfassen außerdem Bandbreite, Filterung,
+          Jitter und Quantisierung. Dies ist kein Hardware-Benchmark und keine
+          Live-Messung von HaptIQ.
         </p>
       </div>
     </div>

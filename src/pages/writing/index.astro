@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Arrow from '../../components/Arrow.astro';
 import { formatMonthYear } from '../../lib/dates';
 const notes = (await getCollection('writing')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -8,39 +9,34 @@ const notes = (await getCollection('writing')).sort(
 ---
 
 <BaseLayout
-  title="Writing"
-  description="Technical field notes on engineering, software, and the decisions behind the work."
+  title="Notizen"
+  description="Technische Notizen zu Projekten, Software und den Entscheidungen dahinter."
 >
   <header class="page-intro container">
-    <span class="eyebrow">NOTES FROM THE WORKBENCH</span>
+    <span class="eyebrow">GEDANKEN AUS DER WERKSTATT</span>
     <h1>
-      A place to
+      Gedanken, die
       <br />
-      <em>think it through.</em>
+      <em>weiterführen.</em>
     </h1>
     <p class="intro-description">
-      Short essays on building, observing, and making sense of things. Written
-      alongside the work.
+      Notizen zum Bauen, Beobachten und Verstehen. Entstanden neben der Arbeit
+      an den Projekten.
     </p>
   </header>
-  <section class="container page-body" aria-label="Articles">
+  <section class="container page-body" aria-label="Artikel">
     <div class="note-list">
-      {notes.map((note, index) => (
+      {notes.map((note) => (
         <a class="note-row" href={`/writing/${note.data.slug}/`}>
-          <span class="mono note-number">
-            {String(index + 1).padStart(2, '0')}
-          </span>
+          <span class="mono">{note.data.tags[0]}</span>
           <div>
-            <span class="eyebrow">{note.data.tags.join(' / ')}</span>
             <h3>{note.data.title}</h3>
             <p>{note.data.description}</p>
+            <time class="mono" datetime={note.data.date.toISOString()}>
+              {formatMonthYear(note.data.date)}
+            </time>
           </div>
-          <time class="note-date mono" datetime={note.data.date.toISOString()}>
-            {formatMonthYear(note.data.date)}
-          </time>
-          <span class="note-arrow" aria-hidden="true">
-            ↗
-          </span>
+          <Arrow />
         </a>
       ))}
     </div>

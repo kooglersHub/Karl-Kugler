@@ -6,39 +6,38 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99),
 );
 const categories = [
-  'All projects',
+  'Alle Projekte',
   ...new Set(projects.map((project) => project.data.category)),
 ];
 ---
 
 <BaseLayout
-  title="Projects"
-  description="Selected explorations in robotics, software, and artificial life by Karl Kugler."
+  title="Projekte"
+  description="Eigene Projekte zwischen Robotik, Software, künstlichem Leben und Gestaltung."
 >
   <div class="page-intro container">
     <span class="eyebrow">
-      THE PROJECT INDEX / {String(projects.length).padStart(2, '0')}{' '}
-      EXPLORATIONS
+      PROJEKTE / {String(projects.length).padStart(2, '0')} EINBLICKE
     </span>
     <h1>
-      Built to
+      Ideen werden
       <br />
-      <em>find out.</em>
+      <em>greifbar.</em>
     </h1>
     <p class="intro-description">
-      Software, physical systems, and questions worth following. A closer look
-      at the work and the decisions behind it.
+      Software, physische Systeme und Fragen, denen ich nachgehen möchte. Ein
+      Blick auf die Arbeit und die Entscheidungen dahinter.
     </p>
   </div>
-  <section class="page-body container" aria-label="Project collection">
-    <div class="filters" hidden aria-label="Filter by category">
+  <section class="page-body container" aria-label="Projektsammlung">
+    <div class="filters" hidden aria-label="Nach Bereich filtern">
       {categories.map((category, index) => (
         <button type="button" data-filter={category} aria-pressed={index === 0}>
           {category}
         </button>
       ))}
       <span class="filter-status mono" role="status" aria-live="polite">
-        {projects.length} projects
+        {projects.length} Projekte
       </span>
     </div>
     <div class="projects-grid">
@@ -47,7 +46,7 @@ const categories = [
       ))}
     </div>
     <p class="project-empty" hidden>
-      No projects in this category yet.
+      In diesem Bereich gibt es noch keine Projekte.
     </p>
   </section>
   <script>
@@ -65,7 +64,7 @@ const categories = [
           let count = 0;
           for (const project of projects) {
             project.hidden =
-              button.dataset.filter !== 'All projects' &&
+              button.dataset.filter !== 'Alle Projekte' &&
               project.dataset.category !== button.dataset.filter;
             if (!project.hidden) count++;
           }
@@ -73,7 +72,7 @@ const categories = [
             item.setAttribute('aria-pressed', String(item === button));
           const status = filters.querySelector('[role="status"]');
           if (status)
-            status.textContent = `${count} ${count === 1 ? 'project' : 'projects'}`;
+            status.textContent = `${count} ${count === 1 ? 'Projekt' : 'Projekte'}`;
           const empty = document.querySelector<HTMLElement>('.project-empty');
           if (empty) empty.hidden = count !== 0;
         });

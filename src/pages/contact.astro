@@ -1,54 +1,112 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
 import { site } from '../config';
+import { services, createEnquiryHref } from '../lib/services';
 ---
 
 <BaseLayout
-  title="Contact"
-  description="Get in touch with Karl Kugler about engineering, software, or a shared curiosity."
+  title="Kontakt"
+  description="Karl Kugler aus Karlsruhe für Websites, technische Projekte oder einen Messe- und Host-Einsatz anfragen."
 >
   <header class="page-intro container">
-    <span class="eyebrow">GOOD THINGS START WITH A CONVERSATION</span>
+    <span class="eyebrow">DIGITAL. TECHNISCH. VOR ORT.</span>
     <h1>
-      What are you
+      Wobei kann ich
       <br />
-      <em>working on?</em>
+      dich unterstützen?
     </h1>
+    <p class="intro-description">
+      Eine erste Idee, eine konkrete Aufgabe oder ein Einsatz vor Ort: Erzähl
+      mir, was du vorhast.
+    </p>
   </header>
   <section
     class="container page-body contact-layout"
-    aria-label="Contact details"
+    aria-label="Kontakt und Anfrage"
   >
     <div>
-      <span class="eyebrow">WRITE DIRECTLY</span>
+      <span class="eyebrow">DIREKT SCHREIBEN</span>
       <a class="contact-email" href={`mailto:${site.email}`}>
         {site.email}
       </a>
       <p>
-        A project, a technical question, or something you think I should see —
-        feel free to get in touch.
+        Am besten mit einer kurzen Beschreibung, einem Zeitrahmen und – bei
+        Veranstaltungen – Ort und Datum. Umfang, Konditionen und Termine stimmen
+        wir individuell ab.
       </p>
-      <p class="mono">THIS LINK OPENS YOUR EMAIL APP.</p>
+      <div class="enquiry-options" aria-label="Anliegen auswählen">
+        {services.map((service) => (
+          <a
+            href={`/contact/?anliegen=${service.id}`}
+            data-enquiry={service.id}
+          >
+            {service.title}
+          </a>
+        ))}
+      </div>
+      <div class="enquiry-box">
+        <h2 id="enquiry-title">Eine Zusammenarbeit anfragen</h2>
+        <p id="enquiry-brief">
+          Schreib mir, was entstehen soll und wobei du Hilfe brauchst.
+        </p>
+        <a
+          class="button"
+          id="enquiry-email"
+          href={createEnquiryHref(site.email, null)}
+          data-email={site.email}
+        >
+          Anfrage per E-Mail
+          <Arrow />
+        </a>
+        <p class="mono">
+          Öffnet deine E-Mail-App. Hier wird nichts automatisch versendet.
+        </p>
+      </div>
     </div>
     <div>
       <a class="profile-link" href={site.github}>
         <span>
-          GitHub<small>@kooglersHub · Code & projects</small>
+          GitHub<small>@kooglersHub · Code & Projekte</small>
         </span>
-        <span aria-hidden="true">↗</span>
+        <Arrow />
       </a>
       <a class="profile-link" href={site.linkedin}>
         <span>
-          LinkedIn<small>/in/karl-kugler · Connect</small>
+          LinkedIn<small>/in/karl-kugler · Vernetzen</small>
         </span>
-        <span aria-hidden="true">↗</span>
+        <Arrow />
       </a>
-      <a class="profile-link" href="/projects/">
+      <a class="profile-link" href={site.shirts}>
         <span>
-          The project index<small>Explore the work before saying hello.</small>
+          little detours<small>Mein Designprojekt · Shop-Vorschau</small>
         </span>
-        <span aria-hidden="true">↗</span>
+        <Arrow />
       </a>
+      <p>
+        Meine Basis ist Karlsruhe. Deutsch ist meine Muttersprache, Englisch
+        spreche ich fließend.
+      </p>
     </div>
   </section>
+  <script>
+    import { getService, createEnquiryHref } from '../lib/services';
+    const id = new URLSearchParams(location.search).get('anliegen');
+    const service = getService(id);
+    if (service) {
+      const title = document.querySelector('#enquiry-title');
+      const brief = document.querySelector('#enquiry-brief');
+      const email = document.querySelector<HTMLAnchorElement>('#enquiry-email');
+      if (title) title.textContent = service.title;
+      if (brief) brief.textContent = service.brief;
+      if (email?.dataset.email)
+        email.href = createEnquiryHref(email.dataset.email, id);
+      document
+        .querySelectorAll<HTMLElement>('[data-enquiry]')
+        .forEach((link) => {
+          if (link.dataset.enquiry === service.id)
+            link.setAttribute('aria-current', 'true');
+        });
+    }
+  </script>
 </BaseLayout>

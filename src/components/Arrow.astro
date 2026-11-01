@@ -1,0 +1,12 @@
+---
+import upRight from '../assets/icons/arrow-up-right.svg?raw';
+import right from '../assets/icons/arrow-right.svg?raw';
+import down from '../assets/icons/arrow-down.svg?raw';
+interface Props {
+  direction?: 'right' | 'up-right' | 'down';
+}
+const { direction = 'up-right' } = Astro.props;
+const icons = { right, 'up-right': upRight, down };
+---
+
+<span class="arrow-icon" aria-hidden="true" set:html={icons[direction]} />

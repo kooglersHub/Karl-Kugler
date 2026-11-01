@@ -10,14 +10,19 @@ const projects = defineCollection({
       slug: z.string().regex(/^[a-z0-9-]+$/),
       title: z.string(),
       description: z.string(),
-      category: z.enum(['Robotics', 'Artificial life', 'Software']),
+      category: z.enum([
+        'Robotik',
+        'Künstliches Leben',
+        'Software',
+        'Design & Web',
+      ]),
       technologies: z.array(z.string()),
       year: z.number().int(),
       status: z.enum([
-        'In development',
-        'Experimental',
-        'Complete',
-        'Archived',
+        'In Entwicklung',
+        'Experimentell',
+        'Abgeschlossen',
+        'Archiviert',
       ]),
       featuredOrder: z.number().optional(),
       cover: image().optional(),
@@ -34,7 +39,7 @@ const projects = defineCollection({
       demoUrl: z.url().optional(),
       repositoryUrl: z.url().optional(),
       links: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
-      visual: z.enum(['hand', 'life']),
+      visual: z.enum(['hand', 'life', 'shirt']),
     }),
 });
 

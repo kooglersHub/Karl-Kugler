@@ -1,142 +1,160 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectPreview from '../components/ProjectPreview.astro';
-import { formatMonthYear } from '../lib/dates';
-const projects = (await getCollection('projects'))
-  .filter((p) => p.data.featuredOrder !== undefined)
-  .sort((a, b) => a.data.featuredOrder! - b.data.featuredOrder!);
-const notes = (await getCollection('writing')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+import Arrow from '../components/Arrow.astro';
+import { services } from '../lib/services';
+import { site } from '../config';
+import fern from '../assets/little-detours-fern.webp';
+import hand from '../assets/haptiq-viewer.png';
+const notes = await getCollection('writing');
 ---
 
-<BaseLayout>
-  <section class="hero container">
-    <div class="hero-top eyebrow">
-      <span>
-        <span class="status-dot"></span> SOFTWARE, HARDWARE & EVERYTHING BETWEEN
-      </span>
-      <span class="hero-index">FIELD NOTES / 001</span>
-    </div>
-    <h1>
-      Curiosity,
-      <br />
-      <span class="hero-second">
-        made <em>tangible.</em>
-        <span class="hero-asterisk" aria-hidden="true">
-          ✳
-        </span>
-      </span>
-    </h1>
-    <div class="hero-bottom">
-      <span class="mono hero-scroll">
-        SCROLL TO EXPLORE <span aria-hidden="true">↓</span>
-      </span>
-      <p>
-        I’m Karl. I explore the space where software meets the physical world —
-        through robotics, artificial life, and hands-on experiments.
-      </p>
-      <a class="round-link" href="/about/" aria-label="More about Karl">
-        <span aria-hidden="true">↗</span>
-      </a>
-    </div>
-  </section>
-  <section class="selected-section container" aria-labelledby="selected-title">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">01 / SELECTED WORK</span>
-        <h2 id="selected-title">
-          Ideas, out in the world<span class="accent">.</span>
-        </h2>
-      </div>
-      <a class="text-link" href="/projects/">
-        All projects <span aria-hidden="true">↗</span>
-      </a>
-    </div>
-    <div class="featured-grid">
-      {projects.map((project, index) => (
-        <ProjectPreview
-          project={project}
-          index={index}
-          prominent={index === 0}
-        />
-      ))}
-    </div>
-  </section>
-  <section class="curiosity-section">
-    <div class="container curiosity-grid">
-      <div>
-        <span class="eyebrow">02 / THE COMMON THREAD</span>
-        <h2>
-          Understanding things
-          <br />
-          by <em>building them.</em>
-        </h2>
-      </div>
-      <div>
-        <p class="large-copy">
-          A robot hand. A population of digital organisms. A small experiment
-          that asks a better question.
-        </p>
-        <p>
-          Different materials, the same curiosity: how does it work, what can be
-          measured, and what happens if we try something else?
-        </p>
-        <a class="text-link" href="/lab/">
-          Step into the lab <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </div>
-    <div class="container interest-strip mono">
-      <span>ROBOTICS & ELECTRONICS</span>
-      <span>SOFTWARE SYSTEMS</span>
-      <span>ARTIFICIAL LIFE</span>
-      <span>APPLIED AI</span>
-    </div>
-  </section>
-  <section class="writing-section container" aria-labelledby="notes-title">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">03 / NOTES FROM THE WORKBENCH</span>
-        <h2 id="notes-title">
-          Thinking in the open<span class="accent">.</span>
-        </h2>
-      </div>
-      <a class="text-link" href="/writing/">
-        All writing <span aria-hidden="true">↗</span>
-      </a>
-    </div>
-    <div class="note-list">
-      {notes.map((note, index) => (
-        <a class="note-row" href={`/writing/${note.data.slug}/`}>
-          <span class="mono note-number">0{index + 1}</span>
-          <div>
-            <span class="eyebrow">{note.data.tags.join(' / ')}</span>
-            <h3>{note.data.title}</h3>
-            <p>{note.data.description}</p>
-          </div>
-          <time class="note-date mono" datetime={note.data.date.toISOString()}>
-            {formatMonthYear(note.data.date)}
-          </time>
-          <span class="note-arrow" aria-hidden="true">
-            ↗
+<BaseLayout home>
+  <section class="home-intro forest">
+    <div class="container">
+      <div class="hero-grid">
+        <h1 class="hero-title">
+          <span class="hero-line">
+            <span>Hallo, ich bin Karl.</span>
           </span>
-        </a>
-      ))}
+          <span class="hero-line">
+            <span>Websites. Technik.</span>
+          </span>
+          <span class="hero-line">
+            <span>Mittendrin.</span>
+          </span>
+        </h1>
+        <div class="hero-aside">
+          <p>
+            Aus Karlsruhe.
+            <br />
+            Für digitale Projekte, technische Aufgaben und Einsätze auf Messen
+            und Events.
+          </p>
+          <a class="button" href="/contact/">
+            Zusammenarbeiten
+            <Arrow />
+          </a>
+          <span class="mono">Deutsch · Englisch</span>
+        </div>
+      </div>
+      <div class="service-list" id="leistungen" aria-label="Meine Leistungen">
+        {services.map((service, index) => (
+          <a class="service-row" href={`/contact/?anliegen=${service.id}`}>
+            <span class="service-number">0{index + 1}</span>
+            <h2>{service.title}</h2>
+            <p>{service.description}</p>
+            <Arrow direction="right" />
+          </a>
+        ))}
+      </div>
     </div>
   </section>
-  <section class="contact-band container">
-    <span class="eyebrow">HAVE SOMETHING IN MIND?</span>
-    <div>
-      <h2>
-        Let’s make
-        <br />
-        <em>something click.</em>
-      </h2>
-      <a class="big-arrow" href="/contact/" aria-label="Get in touch">
-        ↗
+  <section class="work-section container" aria-label="Eigene Projekte">
+    <article class="work-spread shirt-spread" data-reveal>
+      <div class="work-copy">
+        <span class="eyebrow">MEIN DESIGNPROJEKT</span>
+        <h2>little detours</h2>
+        <p>
+          Naturmotive auf Shirts, inspiriert von kleinen Entdeckungen und dem
+          Interesse an der Welt um uns herum.
+        </p>
+        <a class="text-link" href={site.shirts}>
+          little-detours.de
+          <Arrow />
+        </a>
+        <span class="project-note mono">KI-Konzeptbild · Shop-Vorschau</span>
+        <a class="quiet-link" href="/projects/little-detours/">
+          Die Idee dahinter
+        </a>
+      </div>
+      <a class="work-image shirt-image" href="/projects/little-detours/">
+        <Image
+          src={fern}
+          alt="KI-Konzeptbild: Cremefarbenes Shirt mit botanischem Farnmotiv auf felsigem Untergrund."
+          widths={[480, 800, 1200, 1703]}
+          sizes="(max-width: 760px) 100vw, 62vw"
+          format="webp"
+          loading="eager"
+        />
+      </a>
+    </article>
+    <article class="work-spread hand-spread" data-reveal>
+      <a class="work-image hand-image" href="/projects/haptiq-hand/">
+        <Image
+          src={hand}
+          alt="HaptIQ-Viewer mit einer robotischen Hand und taktilen Messpunkten; synthetische Testdaten."
+          widths={[480, 800, 1200, 1500]}
+          sizes="(max-width: 760px) 100vw, 60vw"
+          format="webp"
+          loading="lazy"
+        />
+      </a>
+      <div class="work-copy">
+        <span class="eyebrow">SOFTWARE TRIFFT ROBOTIK</span>
+        <h2>HaptIQ Hand</h2>
+        <p>
+          Taktile Telemetrie für eine robotische Hand. Aufgezeichnete Griffe
+          sichtbar machen und sensorbasierte Schätzungen mit CAD-Daten
+          verbinden.
+        </p>
+        <a class="text-link" href="/projects/haptiq-hand/">
+          Zum Projekt
+          <Arrow />
+        </a>
+        <span class="project-note mono">Python · JavaScript · WebGL</span>
+      </div>
+    </article>
+    <div class="more-work" data-reveal>
+      <span class="eyebrow">ES GIBT NOCH MEHR ZU ENTDECKEN</span>
+      <a href="/projects/evolab/">
+        <span>EvoLab</span>
+        <span>Eine kleine Welt für große Fragen.</span>
+        <Arrow />
+      </a>
+      <a href="/projects/">
+        <span>Alle Projekte</span>
+        <span>Hintergründe, Entscheidungen und offene Fragen.</span>
+        <Arrow />
       </a>
     </div>
+  </section>
+  <section class="personal-section forest">
+    <div class="container personal-grid" data-reveal>
+      <span class="eyebrow">TECHNIK. KREATIVITÄT. VOR ORT.</span>
+      <div>
+        <h2>
+          Ich denke mich rein.
+          <br />
+          Und packe mit an.
+        </h2>
+        <p>
+          Mich interessiert, wie Dinge funktionieren – und was daraus werden
+          kann. Mal ist das eine Website, mal eine technische Aufgabe, mal ein
+          Einsatz mit Menschen. Erzähl mir, wobei du Unterstützung brauchst.
+        </p>
+        <a class="text-link" href="/about/">
+          Mehr über mich
+          <Arrow />
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="notes-section container" data-reveal>
+    <div class="section-heading">
+      <span class="eyebrow">GEDANKEN AUS DER WERKSTATT</span>
+      <a class="text-link" href="/writing/">
+        Alle Notizen
+        <Arrow />
+      </a>
+    </div>
+    {notes.map((note) => (
+      <a class="note-row" href={`/writing/${note.data.slug}/`}>
+        <span class="mono">{note.data.tags[0]}</span>
+        <h2>{note.data.title}</h2>
+        <Arrow />
+      </a>
+    ))}
   </section>
 </BaseLayout>

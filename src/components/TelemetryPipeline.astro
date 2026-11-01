@@ -1,14 +1,14 @@
 ---
 const steps = [
-  { title: 'Acquire', description: 'Passive Modbus telemetry' },
-  { title: 'Inspect', description: 'Live viewer or recorded capture' },
-  { title: 'Freeze', description: 'A defined measurement snapshot' },
-  { title: 'Compare', description: 'Candidate CAD placements' },
+  { title: 'Erfassen', description: 'Passive Modbus-Telemetrie' },
+  { title: 'Ansehen', description: 'Live-Ansicht oder Aufzeichnung' },
+  { title: 'Festhalten', description: 'Ein definierter Messstand' },
+  { title: 'Vergleichen', description: 'Mögliche CAD-Platzierungen' },
 ];
 ---
 
-<figure class="telemetry-pipeline" aria-label="HaptIQ measurement pipeline">
-  <span class="eyebrow">FROM OBSERVATION TO ESTIMATION</span>
+<figure class="telemetry-pipeline" aria-label="HaptIQ-Messablauf">
+  <span class="eyebrow">VON DER BEOBACHTUNG ZUR SCHÄTZUNG</span>
   <ol>
     {steps.map((step, index) => (
       <li>

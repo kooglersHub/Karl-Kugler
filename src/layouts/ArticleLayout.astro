@@ -12,7 +12,7 @@ const data = article.data;
   <div class="container">
     <header class="article-header">
       <a class="back-link" href="/writing/">
-        ← ALL FIELD NOTES
+        ← ALLE NOTIZEN
       </a>
       <span class="eyebrow">{data.tags.join(' / ')}</span>
       <h1>{data.title}</h1>
@@ -20,7 +20,7 @@ const data = article.data;
       <div class="article-meta mono">
         KARL KUGLER ·{' '}
         <time datetime={data.date.toISOString()}>
-          {data.date.toLocaleDateString('en-GB', {
+          {data.date.toLocaleDateString('de-DE', {
             day: 'numeric',
             month: 'long',
             year: 'numeric',
@@ -34,7 +34,7 @@ const data = article.data;
     </article>
     <div class="article-rule">
       <a class="text-link" href="/writing/">
-        More from the workbench <span aria-hidden="true">↗</span>
+        Weitere Notizen <span aria-hidden="true">↗</span>
       </a>
     </div>
   </div>

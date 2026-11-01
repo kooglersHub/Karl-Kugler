@@ -1,29 +1,29 @@
 ---
 slug: a-static-first-portfolio
-title: Let the content do the heavy lifting
-description: Why this portfolio starts with HTML, typed content, and very little JavaScript.
+title: Die Inhalte machen die Arbeit
+description: Warum diese Website mit HTML, typisierten Inhalten und wenig JavaScript beginnt.
 date: 2026-11-01
-tags: [Web development, Design decisions]
+tags: [Webentwicklung, Entscheidungen]
 ---
 
-A project page has a straightforward job: show the work, explain the decisions, and make the next step easy to find. Most of that job does not need a running client-side application.
+Eine Projektseite hat eine überschaubare Aufgabe: die Arbeit zeigen, Entscheidungen erklären und den nächsten Schritt leicht machen. Viel davon braucht keine laufende Anwendung im Browser.
 
-This site takes a static-first approach. Astro renders pages at build time. MDX holds case studies and articles. Typed Content Collections validate the metadata before it reaches a layout.
+Diese Website beginnt deshalb mit statischen Seiten. Astro erzeugt das HTML beim Build. MDX enthält Fallstudien und Artikel. Typisierte Content Collections prüfen Metadaten, bevor sie ein Layout erreichen.
 
-## Give content a contract
+## Inhalte mit klarer Struktur
 
-Each project has a title, description, category, technologies, year, and status. Optional media and links provide room for a project to grow without requiring every entry to invent the same evidence.
+Jedes Projekt hat Titel, Beschreibung, Bereich, Technologien, Jahr und Status. Optionale Medien und Links lassen Raum für unterschiedliche Arbeiten, ohne jedem Eintrag dieselben Belege abzuverlangen.
 
-The body remains flexible. A robotics project can explain a measurement pipeline; an artificial-life project can explain controls and uncertainty. A shared layout gives them a common reading rhythm without forcing identical stories.
+Der Text bleibt flexibel: Robotik kann einen Messablauf erklären, künstliches Leben Versuchsgruppen und Unsicherheit, ein Designprojekt seine Motividee. Ein gemeinsames Layout gibt ihnen einen lesbaren Rahmen.
 
-## Spend JavaScript deliberately
+## JavaScript gezielt einsetzen
 
-Filtering projects and changing the color theme require small browser interactions. The signal-sampling lab adds a focused interactive diagram. Reading a case study does not require hydrating a component tree.
+Projektfilter, Farbansicht und vorbereitete E-Mail-Anfragen brauchen kleine Browser-Interaktionen. Im Labor kommt ein fokussiertes Signaldiagramm hinzu. Zum Lesen einer Fallstudie muss kein Komponentenbaum hydriert werden.
 
-The project list remains available without scripting. Fonts are served locally. Images have explicit dimensions and responsive sources. Reduced motion is part of the shared style system.
+Auch Bewegung bleibt eine Ergänzung: Überschriften treten gestaffelt ein, Abschnitte erscheinen beim Scrollen und Projektbilder reagieren auf den Zeiger. Wer reduzierte Bewegung bevorzugt, bekommt eine ruhige Ansicht. Inhalte bleiben ohne JavaScript zugänglich.
 
-## Start from an architecture, then give it an identity
+## Architektur übernehmen, Identität entwickeln
 
-The foundation adapts [Case](https://github.com/erlandv/case), an MIT-licensed Astro theme organized around case studies. Its content-first architecture fits the task. The visual shell is specific to this portfolio: paper, ink, ruled divisions, and an asymmetric editorial grid.
+Die technische Grundlage adaptiert [Case](https://github.com/erlandv/case), ein MIT-lizenziertes Astro-Theme mit Fallstudien im Mittelpunkt. Der neue visuelle Auftritt verwendet Waldgrün, Creme und Sand, markante serifenlose Typografie und echte Projektinhalte.
 
-The principle is simple: reuse the structure that earns its place, then make each visible decision serve the work.
+Die wiederverwendete Struktur soll ihren Platz verdienen. Die sichtbaren Entscheidungen sollen zur Person und zu den Arbeiten passen.

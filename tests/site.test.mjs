@@ -8,6 +8,7 @@ const routes = [
   'projects',
   'projects/haptiq-hand',
   'projects/evolab',
+  'projects/little-detours',
   'lab',
   'writing',
   'writing/measuring-before-claiming',
@@ -26,6 +27,19 @@ test('every portfolio route is generated with a main landmark and descriptive ti
     assert.match(html, /href="#main"/);
     assert.doesNotMatch(html, /hello@example.com|Your Name|Lorem ipsum/);
   }
+});
+
+test('the site presents Karl in German with his actual freelance offer and design project', () => {
+  const html = readFileSync('dist/index.html', 'utf8');
+  assert.match(html, /<html[^>]*lang="de"/);
+  assert.match(html, /Hallo, ich bin Karl/);
+  assert.match(html, /Karlsruhe/);
+  assert.match(html, /Websites.*Software/);
+  assert.match(html, /Technische Unterstützung/);
+  assert.match(html, /Messe.*Host/);
+  assert.match(html, /https:\/\/little-detours.de\//);
+  assert.match(html, /id="leistungen"/);
+  assert.match(html, /contact\/\?anliegen=messe/);
 });
 
 test('contact uses the supplied profile and real email, without an inert form', () => {

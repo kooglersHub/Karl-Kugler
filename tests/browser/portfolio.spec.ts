@@ -6,6 +6,7 @@ const routes = [
   '/projects/',
   '/projects/haptiq-hand/',
   '/projects/evolab/',
+  '/projects/little-detours/',
   '/lab/',
   '/writing/',
   '/writing/measuring-before-claiming/',
@@ -103,14 +104,14 @@ test('major pages meet WCAG 2.2 AA automated accessibility rules in both themes'
 
 test('project filters can be operated from the keyboard', async ({ page }) => {
   await page.goto('/projects/');
-  const robotics = page.getByRole('button', { name: 'Robotics', exact: true });
+  const robotics = page.getByRole('button', { name: 'Robotik', exact: true });
   await robotics.focus();
   await page.keyboard.press('Enter');
   await expect(robotics).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('[data-category]:visible')).toHaveCount(1);
-  await expect(page.getByRole('status')).toHaveText('1 project');
-  await page.getByRole('button', { name: 'All projects' }).click();
-  await expect(page.locator('[data-category]:visible')).toHaveCount(2);
+  await expect(page.getByRole('status')).toHaveText('1 Projekt');
+  await page.getByRole('button', { name: 'Alle Projekte' }).click();
+  await expect(page.locator('[data-category]:visible')).toHaveCount(3);
 });
 
 test('theme persists and skip link reaches the main content', async ({
@@ -118,12 +119,10 @@ test('theme persists and skip link reaches the main content', async ({
 }) => {
   await page.goto('/');
   await page.keyboard.press('Tab');
-  await expect(
-    page.getByRole('link', { name: 'Skip to content' }),
-  ).toBeFocused();
+  await expect(page.getByRole('link', { name: 'Zum Inhalt' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#main$/);
-  await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+  await page.getByRole('button', { name: 'Dunkle Ansicht aktivieren' }).click();
   await page.goto('/about/');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
@@ -139,7 +138,7 @@ test('blocked local storage leaves navigation and theme functional', async ({
     }),
   );
   await page.goto('/');
-  await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+  await page.getByRole('button', { name: 'Dunkle Ansicht aktivieren' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.getByRole('navigation')).toBeVisible();
 });
@@ -148,20 +147,20 @@ test('signal controls expose aliasing and the exact threshold', async ({
   page,
 }) => {
   await page.goto('/lab/');
-  const frequency = page.getByRole('slider', { name: 'Signal frequency' });
-  const sampleRate = page.getByRole('slider', { name: 'Sample rate' });
+  const frequency = page.getByRole('slider', { name: 'Signalfrequenz' });
+  const sampleRate = page.getByRole('slider', { name: 'Abtastrate' });
   await frequency.fill('12');
   await sampleRate.fill('4');
   await expect(page.locator('.signal-readout[role="status"]')).toContainText(
-    'Below the Nyquist threshold',
+    'Unter der Nyquist-Grenze',
   );
   await sampleRate.fill('24');
   await expect(page.locator('.signal-readout[role="status"]')).toContainText(
-    'At the Nyquist threshold',
+    'An der Nyquist-Grenze',
   );
   await sampleRate.fill('64');
   await expect(page.locator('.signal-readout[role="status"]')).toContainText(
-    'Above the Nyquist threshold',
+    'Über der Nyquist-Grenze',
   );
   await expect(page.locator('#signal-samples circle')).toHaveCount(65);
 });
@@ -170,7 +169,7 @@ test('content and navigation work without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4321/projects/');
-  await expect(page.locator('[data-category]:visible')).toHaveCount(2);
+  await expect(page.locator('[data-category]:visible')).toHaveCount(3);
   await expect(page.locator('.filters')).toBeHidden();
   await page.getByRole('link', { name: 'HaptIQ Hand', exact: true }).click();
   await expect(page.locator('h1')).toContainText('HaptIQ Hand');
@@ -178,4 +177,37 @@ test('content and navigation work without JavaScript', async ({ browser }) => {
   await expect(page.locator('#signal-plot')).toBeVisible();
   await expect(page.locator('.signal-controls')).toBeHidden();
   await context.close();
+});
+
+test('hero text fits and service links prepare the right enquiry', async ({
+  page,
+}) => {
+  for (const width of [375, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await page.evaluate(() => document.fonts.ready);
+    const linesFit = await page
+      .locator('.hero-line')
+      .evaluateAll((lines) =>
+        lines.every(
+          (line) => line.firstElementChild!.scrollWidth <= line.clientWidth + 1,
+        ),
+      );
+    expect(linesFit, `hero at ${width}px`).toBe(true);
+  }
+  await page.getByRole('link', { name: /Messe & Host/ }).click();
+  await expect(page).toHaveURL(/anliegen=messe/);
+  await expect(page.locator('#enquiry-email')).toHaveAttribute(
+    'href',
+    /Messe/i,
+  );
+});
+
+test('reduced motion disables the animated hero', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await expect(page.locator('.hero-line > span').first()).toHaveCSS(
+    'animation-duration',
+    '0s',
+  );
 });
