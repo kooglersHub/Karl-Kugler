@@ -60,4 +60,4 @@ The email comes from the connected GitHub identity. Contact uses a real `mailto:
 
 ## Decisions and evidence
 
-See [redesign audit](docs/design/2026-11-01-redesign-audit.md), [selected direction](docs/design/2026-11-01-selected-design.md), [repository audit](docs/repository-audit.md), [design](docs/superpowers/specs/2026-11-01-portfolio-design.md), [implementation plan](docs/superpowers/plans/2026-11-01-portfolio.md), [validation](docs/validation.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
+See [2026-11-07 unslop polish and checks](docs/design/2026-11-07-unslop-polish.md), [redesign audit](docs/design/2026-11-01-redesign-audit.md), [selected direction](docs/design/2026-11-01-selected-design.md), [repository audit](docs/repository-audit.md), [design](docs/superpowers/specs/2026-11-01-portfolio-design.md), [implementation plan](docs/superpowers/plans/2026-11-01-portfolio.md), [validation](docs/validation.md) and [third-party notices](THIRD_PARTY_NOTICES.md).

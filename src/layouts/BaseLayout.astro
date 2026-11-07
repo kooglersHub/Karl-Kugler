@@ -1,9 +1,6 @@
 ---
 import '@fontsource/dm-sans/latin-400.css';
 import '@fontsource/dm-sans/latin-500.css';
-import '@fontsource/dm-sans/latin-700.css';
-import '@fontsource/dm-sans/latin-800.css';
-import '@fontsource/dm-sans/latin-900.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import '../styles/global.css';
 import { site, navigation } from '../config';
@@ -102,7 +99,7 @@ const canonical = Astro.site
       <div class="container">
         <div class="footer-top">
           <div>
-            <span class="eyebrow">NOCH EINE IDEE?</span>
+            <span class="eyebrow">Noch eine Idee?</span>
             <a class="footer-cta" href="/contact/">
               Lass uns sprechen.
               <Arrow />
@@ -172,10 +169,10 @@ const canonical = Astro.site
               if (!entry.isIntersecting) continue;
               const animation = entry.target.animate(
                 [
-                  { opacity: 0.25, transform: 'translateY(35px)' },
+                  { opacity: 0.25, transform: 'translateY(8px)' },
                   { opacity: 1, transform: 'translateY(0)' },
                 ],
-                { duration: 850, easing: 'cubic-bezier(.2,.65,.2,1)' },
+                { duration: 400, easing: 'cubic-bezier(.2,.65,.2,1)' },
               );
               animations.add(animation);
               animation.finished
