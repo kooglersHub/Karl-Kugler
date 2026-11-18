@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const routes = [
+const germanRoutes = [
   '/',
   '/projects/',
   '/projects/haptiq-hand/',
   '/projects/evolab/',
   '/projects/little-detours/',
+  '/projects/picture-to-print/',
   '/lab/',
   '/writing/',
   '/writing/measuring-before-claiming/',
@@ -15,6 +16,7 @@ const routes = [
   '/contact/',
   '/404.html',
 ];
+const routes = [...germanRoutes, ...germanRoutes.map((route) => `/en${route}`)];
 
 test('visible link text is included in the accessible name for speech navigation', async ({
   page,
@@ -28,7 +30,7 @@ test('visible link text is included in the accessible name for speech navigation
   }
 });
 
-for (const width of [375, 768, 1024, 1440]) {
+for (const width of [375, 768, 1440, 1920]) {
   test(`all pages render without overflow, failed assets or console errors at ${width}px`, async ({
     page,
   }, testInfo) => {
@@ -52,6 +54,19 @@ for (const width of [375, 768, 1024, 1440]) {
         ),
         route,
       ).toBe(true);
+      for (const image of await page.locator('img').all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect
+          .poll(
+            () =>
+              image.evaluate(
+                (element: HTMLImageElement) =>
+                  element.complete && element.naturalWidth > 0,
+              ),
+            { message: route },
+          )
+          .toBe(true);
+      }
       expect(
         await page
           .locator('img')
@@ -65,13 +80,12 @@ for (const width of [375, 768, 1024, 1440]) {
           ),
         route,
       ).toBe(true);
-      if (width === 375 || width === 1440)
-        await page.screenshot({
-          path: testInfo.outputPath(
-            `${route.replaceAll('/', '_') || 'home'}-${width}.png`,
-          ),
-          fullPage: true,
-        });
+      await page.screenshot({
+        path: testInfo.outputPath(
+          `${route.replaceAll('/', '_') || 'home'}-${width}.png`,
+        ),
+        fullPage: true,
+      });
     }
     expect(errors).toEqual([]);
   });
@@ -81,7 +95,9 @@ test('major pages meet WCAG 2.2 AA automated accessibility rules in both themes'
   page,
 }) => {
   for (const theme of ['light', 'dark']) {
-    for (const route of routes.filter((route) => route !== '/404.html')) {
+    for (const route of routes.filter(
+      (route) => !route.endsWith('/404.html'),
+    )) {
       await page.goto(route);
       await page.evaluate(
         (value) => (document.documentElement.dataset.theme = value),
@@ -111,7 +127,7 @@ test('project filters can be operated from the keyboard', async ({ page }) => {
   await expect(page.locator('[data-category]:visible')).toHaveCount(1);
   await expect(page.getByRole('status')).toHaveText('1 Projekt');
   await page.getByRole('button', { name: 'Alle Projekte' }).click();
-  await expect(page.locator('[data-category]:visible')).toHaveCount(3);
+  await expect(page.locator('[data-category]:visible')).toHaveCount(4);
 });
 
 test('theme persists and skip link reaches the main content', async ({
@@ -165,49 +181,106 @@ test('signal controls expose aliasing and the exact threshold', async ({
   await expect(page.locator('#signal-samples circle')).toHaveCount(65);
 });
 
-test('content and navigation work without JavaScript', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+test('content and navigation work without JavaScript', async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL,
+  });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/projects/');
-  await expect(page.locator('[data-category]:visible')).toHaveCount(3);
+  await page.goto('/projects/');
+  await expect(page.locator('[data-category]:visible')).toHaveCount(4);
   await expect(page.locator('.filters')).toBeHidden();
-  await page.getByRole('link', { name: 'HaptIQ Hand', exact: true }).click();
+  await page
+    .getByRole('heading', { name: 'HaptIQ Hand', exact: true })
+    .getByRole('link')
+    .click();
   await expect(page.locator('h1')).toContainText('HaptIQ Hand');
-  await page.goto('http://127.0.0.1:4321/lab/');
+  await page.goto('/lab/');
   await expect(page.locator('#signal-plot')).toBeVisible();
   await expect(page.locator('.signal-controls')).toBeHidden();
+  await page.goto('/en/contact/');
+  await expect(
+    page.getByRole('link', { name: 'Trade fairs & events' }),
+  ).toHaveAttribute('href', /^mailto:.*Trade%20fairs/);
   await context.close();
 });
 
-test('hero text fits and service links prepare the right enquiry', async ({
+test('home names the degree and the enquiry detects the event service', async ({
   page,
 }) => {
-  for (const width of [375, 768, 1024, 1440]) {
-    await page.setViewportSize({ width, height: 900 });
-    await page.goto('/');
-    await page.evaluate(() => document.fonts.ready);
-    const linesFit = await page
-      .locator('.hero-line')
-      .evaluateAll((lines) =>
-        lines.every(
-          (line) => line.firstElementChild!.scrollWidth <= line.clientWidth + 1,
-        ),
-      );
-    expect(linesFit, `hero at ${width}px`).toBe(true);
-  }
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    /Karl\s+Kugler/,
+  );
+  await expect(
+    page.getByText('Mechatronik und Informationstechnik am KIT', {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page.locator('summary').click();
   await page.getByRole('link', { name: /Messe & Host/ }).click();
-  await expect(page).toHaveURL(/anliegen=messe/);
+  await expect(page).toHaveURL(/anliegen=messe#freelance$/);
   await expect(page.locator('#enquiry-email')).toHaveAttribute(
     'href',
     /Messe/i,
   );
 });
 
-test('reduced motion disables the animated hero', async ({ page }) => {
+test('language switch stays on the corresponding project and works without client scripts', async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL,
+  });
+  const page = await context.newPage();
+  await page.goto('/projects/evolab/');
+  await page.getByRole('link', { name: 'English' }).click();
+  await expect(page).toHaveURL(/\/en\/projects\/evolab\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(
+    page.getByRole('heading', { name: 'What keeps a population alive?' }),
+  ).toBeVisible();
+  await page.getByRole('link', { name: 'Deutsch' }).click();
+  await expect(page).toHaveURL(/\/projects\/evolab\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+  await context.close();
+});
+
+test('English lab controls and enquiry subjects are translated', async ({
+  page,
+}) => {
+  await page.goto('/contact/?anliegen=messe#freelance');
+  await page.getByRole('link', { name: 'English' }).click();
+  await expect(page).toHaveURL(/\/en\/contact\/\?anliegen=messe#freelance$/);
+  await expect(page.locator('#enquiry-title')).toHaveText(
+    'Trade fairs & events',
+  );
+  await expect(page.locator('#enquiry-email')).toHaveAttribute(
+    'href',
+    /Trade%20fairs/,
+  );
+  await page.goto('/en/lab/');
+  await page.getByRole('slider', { name: 'Signal frequency' }).fill('12');
+  await page.getByRole('slider', { name: 'Sample rate' }).fill('4');
+  await expect(page.locator('.signal-readout[role="status"]')).toContainText(
+    'Below the Nyquist limit',
+  );
+});
+
+test('reduced motion keeps the home hero static', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await expect(page.locator('.hero-line > span').first()).toHaveCSS(
+  await expect(page.getByRole('heading', { level: 1 })).toHaveCSS(
     'animation-duration',
+    '0s',
+  );
+  await expect(page.getByRole('link', { name: 'Projekte ansehen' })).toHaveCSS(
+    'transition-duration',
     '0s',
   );
 });

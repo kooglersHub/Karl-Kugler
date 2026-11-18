@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SignalLab from '../components/SignalLab.astro';
+import { localeFor, localPath } from '../lib/locale';
+const locale = localeFor(Astro.url.pathname);
+const en = locale === 'en';
+---
+
+<BaseLayout
+  title={en ? 'Lab' : 'Labor'}
+  description={
+    en
+      ? 'An interactive experiment in signal sampling and aliasing.'
+      : 'Ein interaktives Experiment zu Signalabtastung und Aliasing.'
+  }
+>
+  <header class="container page-intro">
+    <p class="eyebrow">
+      {en ? 'Lab / Signal measurements' : 'Labor / Signalmessung'}
+    </p>
+    <h1>{en ? 'Between samples' : 'Zwischen Messpunkten'}</h1>
+    <p class="intro-description">
+      {en
+        ? 'A sampling exercise inspired by working with telemetry. What changes when a sensor samples less often?'
+        : 'Ein Versuch zur Abtastung, angeregt durch die Arbeit mit Telemetrie. Was ändert sich, wenn ein Sensor seltener misst?'}
+    </p>
+  </header>
+  <div class="container page-body">
+    <SignalLab />
+    <div class="lab-explanation">
+      <div>
+        <h2>{en ? 'What the dots show' : 'Was die Punkte zeigen'}</h2>
+        <p>
+          {en
+            ? 'A sensor observes a signal at discrete times. A smooth line can hide how little was actually measured. Change the two controls to compare the wave and the samples.'
+            : 'Ein Sensor beobachtet ein Signal zu einzelnen Zeitpunkten. Eine glatte Linie kann verdecken, wie wenig tatsächlich gemessen wurde. Mit den Reglern kannst du Welle und Messpunkte vergleichen.'}
+        </p>
+      </div>
+      <div>
+        <h2>{en ? 'Where the model ends' : 'Wo das Modell endet'}</h2>
+        <p>
+          {en
+            ? 'This sine wave has exact timing and no noise. Real measurements involve filters, jitter and quantisation. HaptIQ uses its own recorded or live telemetry.'
+            : 'Diese Sinuswelle hat exakte Zeitpunkte und kein Rauschen. In echten Messketten kommen Filter, Jitter und Quantisierung hinzu. HaptIQ verwendet eigene aufgezeichnete oder laufende Telemetrie.'}
+        </p>
+        <a class="text-link" href={localPath(locale, '/projects/haptiq-hand/')}>
+          HaptIQ Hand ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

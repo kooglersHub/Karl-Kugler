@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
+import { formatMonthYear } from '../lib/dates';
+import { localeFor, localPath } from '../lib/locale';
+
+const locale = localeFor(Astro.url.pathname);
+const en = locale === 'en';
+const notes = (
+  await getCollection('writing', ({ data }) => data.locale === locale)
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title={en ? 'Notes' : 'Notizen'}
+  description={
+    en
+      ? 'Technical notes on software, measurement and experiments.'
+      : 'Technische Notizen zu Software, Messungen und Experimenten.'
+  }
+>
+  <header class="container page-intro">
+    <h1>{en ? 'Notes' : 'Notizen'}</h1>
+    <p class="intro-description">
+      {en
+        ? 'Things I learned while building and testing these projects.'
+        : 'Was ich beim Bauen und Testen der Projekte gelernt habe.'}
+    </p>
+  </header>
+  <section class="container page-body" aria-label={en ? 'Articles' : 'Artikel'}>
+    {notes.map(({ data }) => (
+      <a class="note-row" href={localPath(locale, `/writing/${data.slug}/`)}>
+        <span class="mono">{data.tags[0]}</span>
+        <div>
+          <h2>{data.title}</h2>
+          <p>{data.description}</p>
+          <time class="mono" datetime={data.date.toISOString()}>
+            {formatMonthYear(data.date, locale)}
+          </time>
+        </div>
+        <Arrow />
+      </a>
+    ))}
+  </section>
+</BaseLayout>

@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExhibitMedia from '../components/ExhibitMedia.astro';
+import Arrow from '../components/Arrow.astro';
+import { localeFor, localPath } from '../lib/locale';
+
+const locale = localeFor(Astro.url.pathname);
+const en = locale === 'en';
+const projects = (
+  await getCollection('projects', ({ data }) => data.locale === locale)
+).sort((a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99));
+const categories = [...new Set(projects.map(({ data }) => data.category))];
+---
+
+<BaseLayout
+  title={en ? 'Projects' : 'Projekte'}
+  description={
+    en
+      ? 'Case studies in robotics, simulation, 3D printing and design by Karl Kugler.'
+      : 'Fallstudien zu Robotik, Simulation, 3D-Druck und Gestaltung von Karl Kugler.'
+  }
+>
+  <header class="container page-intro">
+    <h1>{en ? 'Projects' : 'Projekte'}</h1>
+    <p class="intro-description">
+      {en
+        ? 'What I built, the choices behind it, and the questions each project left open.'
+        : 'Was ich gebaut habe, warum ich mich so entschieden habe und welche Fragen noch offen sind.'}
+    </p>
+  </header>
+  <section
+    class="container page-body"
+    aria-label={en ? 'Project collection' : 'Projektsammlung'}
+  >
+    <div
+      class="filters"
+      hidden
+      aria-label={en ? 'Filter by category' : 'Nach Bereich filtern'}
+    >
+      <button type="button" data-filter="" aria-pressed="true">
+        {en ? 'All projects' : 'Alle Projekte'}
+      </button>
+      {categories.map((category) => (
+        <button type="button" data-filter={category} aria-pressed="false">
+          {category}
+        </button>
+      ))}
+      <span class="filter-status mono" role="status" aria-live="polite"></span>
+    </div>
+    <div class="projects-grid">
+      {projects.map((project) => {
+        const { data } = project;
+        const href = localPath(locale, `/projects/${data.slug}/`);
+        return (
+          <article
+            data-category={data.category}
+            class:list={['project-preview', `preview-${data.visual}`]}
+          >
+            <ExhibitMedia
+              project={project}
+              eager={data.visual === 'hand'}
+              href={data.cover ? href : undefined}
+            />
+            <div class="project-caption">
+              <p class="eyebrow">
+                {data.category} / {data.status}
+              </p>
+              <h2>
+                <a href={href}>
+                  {data.title}
+                  <Arrow />
+                </a>
+              </h2>
+              <p>{data.description}</p>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+  <script>
+    const filter = document.querySelector<HTMLElement>('.filters');
+    const buttons = [
+      ...document.querySelectorAll<HTMLButtonElement>('[data-filter]'),
+    ];
+    const cards = [
+      ...document.querySelectorAll<HTMLElement>('[data-category]'),
+    ];
+    const status = document.querySelector('.filter-status');
+    const en = document.documentElement.lang === 'en';
+    function filterProjects(selected: HTMLButtonElement) {
+      buttons.forEach((button) =>
+        button.setAttribute('aria-pressed', String(button === selected)),
+      );
+      const category = selected.dataset.filter;
+      cards.forEach((card) => {
+        card.hidden = Boolean(category && card.dataset.category !== category);
+      });
+      const count = cards.filter((card) => !card.hidden).length;
+      if (status)
+        status.textContent = en
+          ? `${count} ${count === 1 ? 'project' : 'projects'}`
+          : `${count} ${count === 1 ? 'Projekt' : 'Projekte'}`;
+    }
+    if (filter && buttons[0]) {
+      filter.hidden = false;
+      filterProjects(buttons[0]);
+      buttons.forEach((button) =>
+        button.addEventListener('click', () => filterProjects(button)),
+      );
+    }
+  </script>
+</BaseLayout>

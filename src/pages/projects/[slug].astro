@@ -2,7 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 export async function getStaticPaths() {
-  return (await getCollection('projects')).map((project) => ({
+  return (
+    await getCollection('projects', ({ data }) => data.locale === 'de')
+  ).map((project) => ({
     params: { slug: project.data.slug },
     props: { project },
   }));

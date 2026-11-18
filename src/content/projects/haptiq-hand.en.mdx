@@ -1,0 +1,36 @@
+---
+locale: en
+slug: haptiq-hand
+title: HaptIQ Hand
+description: A browser viewer for tracing tactile measurements back to the places where a robot hand makes contact.
+category: Robotics
+technologies: [Python, JavaScript, WebGL, Modbus]
+year: 2026
+status: Prototype
+contribution: Further development of the viewer, grasp replay and CAD comparison
+featuredOrder: 1
+cover: ../../assets/haptiq-viewer.png
+coverAlt: The HaptIQ viewer shows an articulated robot hand with tactile readings and a provisional sensor placement. Synthetic test data.
+repositoryUrl: https://github.com/kooglersHub/haptiq-hand
+visual: hand
+---
+
+import TelemetryPipeline from '../../components/TelemetryPipeline.astro';
+
+## Putting measurements in context
+
+A tactile reading is easier to interpret when I can locate it on the hand that produced it. HaptIQ connects joint feedback and tactile readings from an Inspire Robots RH56DFTP to an articulated model in the browser.
+
+## From a grasp to a comparison
+
+I extended the application with a workflow for examining recorded grasps and comparing sensor placements. A passive Modbus receiver publishes readings to a local HTTP server. The viewer can follow live data or open a recording without attached hardware. Physical movement is controlled by a separate application.
+
+<TelemetryPipeline />
+
+## Keeping the evidence available
+
+A placement is estimated from a selected measurement snapshot. That lets me trace a result back to the contacts and poses that produced it. The comparison considers contact positions, normals, the hand surface and visibility. Multiple candidates can fit the same data, so the interface labels placements as provisional.
+
+## Status and attribution
+
+The geometry and taxel positions are approximate and uncalibrated. Open meshes, limited motion coverage and a finite search constrain what the fits can say about the hardware. The cover shows synthetic data. HaptIQ Hand builds on the [original HaptIQ project](https://github.com/rht2001/haptiq). The [third-party notices](https://github.com/kooglersHub/haptiq-hand/blob/main/THIRD_PARTY_NOTICES.md) cover hand geometry, sensor CAD and reference material.

@@ -1,11 +1,12 @@
 ---
 slug: haptiq-hand
 title: HaptIQ Hand
-description: Taktile Telemetrie sichtbar machen. Ein Hand-Viewer, aufgezeichnete Griffe und CAD-basierte Sensorschätzung.
+description: Ein Viewer, mit dem ich taktile Messwerte den Kontaktstellen einer Roboterhand zuordnen kann.
 category: Robotik
 technologies: [Python, JavaScript, WebGL, Modbus]
 year: 2026
-status: In Entwicklung
+status: Prototyp
+contribution: Weiterentwicklung des Viewers, Griffwiedergabe und CAD-Vergleich
 featuredOrder: 1
 cover: ../../assets/haptiq-viewer.png
 coverAlt: HaptIQ-Viewer mit robotischer Hand, taktilen Messpunkten und vorläufiger Sensorplatzierung. Synthetische Testdaten.
@@ -19,7 +20,7 @@ import TelemetryPipeline from '../../components/TelemetryPipeline.astro';
 
 Ein taktiler Messwert wird verständlicher, wenn man ihn auf der Hand verorten kann, die ihn erzeugt hat. HaptIQ verbindet Gelenkrückmeldungen und taktile Daten einer Inspire Robots RH56DFTP mit einem beweglichen Handmodell im Browser.
 
-Die Anwendung bringt Live-Ansicht, Wiedergabe aufgezeichneter Griffe und CAD-basierte Sensorschätzung zusammen. Der passive Empfänger beobachtet die Telemetrie; physische Bewegungen steuert eine separate Anwendung.
+Ich habe die Anwendung für die Untersuchung aufgezeichneter Griffe und den Vergleich möglicher Sensorplatzierungen weiterentwickelt. Der passive Empfänger beobachtet die Telemetrie; physische Bewegungen steuert eine separate Anwendung.
 
 ## Von den Daten zur Ansicht
 

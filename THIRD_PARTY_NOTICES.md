@@ -10,11 +10,11 @@ This site adapts the static Astro + MDX + sitemap architecture and typed glob-lo
 
 - `src/assets/haptiq-viewer.png`: screenshot from Karl's [HaptIQ Hand repository](https://github.com/kooglersHub/haptiq-hand/blob/main/docs/images/viewer.png), reused for his portfolio at his request. It depicts synthetic test data and a provisional sensor placement. The screenshot contains upstream hand geometry; attribution is retained through the project case study and [upstream material notices](https://github.com/kooglersHub/haptiq-hand/blob/main/THIRD_PARTY_NOTICES.md). Those notices record owner-confirmed redistribution permission without assigning a blanket license to CAD assets. This website does not redistribute the underlying meshes, CAD files or hardware manual.
 - HaptIQ case-study facts follow the current repository README and its explicit limitations. Application lineage: [rht2001/haptiq](https://github.com/rht2001/haptiq). Hand geometry provenance: [AlexArutiunian/tactile-rh56dftp](https://github.com/AlexArutiunian/tactile-rh56dftp).
-- EvoLab summary follows Karl's connected private repository README, used with his instruction to draw on his projects. No private source code, datasets or assets are included. `LifeDiagram.astro` is an original conceptual SVG illustration, not a recorded experiment or application screenshot.
+- EvoLab summary follows Karl's connected private repository README, used with his instruction to draw on his projects. The build includes the documented run screenshot converted to WebP. The image matches the recorded seed and timestamp. The portfolio includes no private source code or datasets.
 - The lab's signal plot is original SVG/code and explicitly educational. It represents no actual hardware data.
-- The two articles are newly drafted technical notes, grounded in project documentation and this implementation. They are not copied published articles or invented experimental reports.
+- The two original notes and their English translations draw on the project documentation and site implementation.
 
-- `src/assets/little-detours-fern.webp` is an AI-generated concept based on Karl’s own little detours design; it is not a product photograph.
+- `src/assets/fern-print.webp` is the digital fern motif used in the little detours preview. The process figure for Picture to Print describes the steps documented in its public repository.
 
 ## Icons
 

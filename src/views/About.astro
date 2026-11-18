@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
+import { localeFor, localPath } from '../lib/locale';
+
+const locale = localeFor(Astro.url.pathname);
+const en = locale === 'en';
+const chapters = en
+  ? [
+      [
+        'Before KIT',
+        'Several months in New Zealand',
+        'I travelled on a working holiday and took on different jobs along the way.',
+      ],
+      [
+        'In Karlsruhe',
+        'Mechatronics and Information Technology',
+        'At KIT, I study how mechanical systems, electronics and software work together. I like working through a problem by building a small version I can test.',
+      ],
+      [
+        'Right now',
+        'Experiments with hands and virtual worlds',
+        'With HaptIQ I’m exploring how to locate contact on a robot hand. In EvoLab I’m learning how to build comparisons into a simulation so I can explain what changed.',
+      ],
+    ]
+  : [
+      [
+        'Vor dem Studium',
+        'Mehrere Monate in Neuseeland',
+        'Ich war mit einem Working-Holiday-Visum unterwegs und habe in verschiedenen Jobs gearbeitet.',
+      ],
+      [
+        'In Karlsruhe',
+        'Mechatronik und Informationstechnik',
+        'Am KIT beschäftige ich mich damit, wie Mechanik, Elektronik und Software zusammenarbeiten. Wenn mich eine Frage besonders interessiert, baue ich gern eine kleine Version, an der ich sie ausprobieren kann.',
+      ],
+      [
+        'Gerade jetzt',
+        'Versuche mit Roboterhand und Simulation',
+        'Bei HaptIQ geht es darum, Berührungen auf einer Roboterhand zu verorten. In EvoLab lerne ich, wie ich Vergleiche so in eine Simulation einbaue, dass sich Veränderungen erklären lassen.',
+      ],
+    ];
+---
+
+<BaseLayout
+  title={en ? 'About me' : 'Über mich'}
+  description={
+    en
+      ? 'About Karl Kugler: studies at KIT, a working holiday in New Zealand and current engineering projects.'
+      : 'Über Karl Kugler: Studium am KIT, Working Holiday in Neuseeland und aktuelle technische Projekte.'
+  }
+>
+  <header class="page-intro container">
+    <p class="eyebrow">Karlsruhe / KIT</p>
+    <h1>{en ? 'About me' : 'Über mich'}</h1>
+    <p class="intro-description">
+      {en
+        ? 'I’m Karl and I study mechatronics at KIT. The projects on this site usually begin with a question I want to try out for myself.'
+        : 'Ich bin Karl und studiere Mechatronik und Informationstechnik am KIT. Die Projekte hier beginnen oft mit einer Frage, die ich selbst ausprobieren will.'}
+    </p>
+  </header>
+  <section
+    class="container biography"
+    aria-label={en ? 'From New Zealand to KIT' : 'Von Neuseeland ans KIT'}
+  >
+    {chapters.map(([period, title, detail]) => (
+      <article>
+        <span class="eyebrow">{period}</span>
+        <div>
+          <h2>{title}</h2>
+          <p>{detail}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+  <section class="container biography-tail">
+    <h2>{en ? 'Out of the lab' : 'Raus aus dem Labor'}</h2>
+    <div>
+      <p>
+        {en
+          ? 'I play volleyball, climb, run and do strength training. I also like reading and travelling when I have the time. I speak German and English.'
+          : 'Ich spiele Volleyball, klettere, laufe und mache Kraftsport. Wenn Zeit ist, lese oder reise ich gern. Ich spreche Deutsch und Englisch.'}
+      </p>
+      <a class="text-link" href={localPath(locale, '/contact/')}>
+        {en ? 'Get in touch' : 'Kontakt aufnehmen'}
+        <Arrow />
+      </a>
+    </div>
+  </section>
+</BaseLayout>

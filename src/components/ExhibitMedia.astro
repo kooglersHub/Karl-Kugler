@@ -1,0 +1,61 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import PrintPipeline from './PrintPipeline.astro';
+import { localeFor } from '../lib/locale';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  eager?: boolean;
+  href?: string;
+}
+
+const { project, eager = false, href } = Astro.props;
+const Media = href ? 'a' : 'div';
+const { cover, coverAlt, title, visual } = project.data;
+const en = localeFor(Astro.url.pathname) === 'en';
+const labels = {
+  hand: en
+    ? ['Viewer / History', 'Synthetic test data']
+    : ['Viewer / Verlauf', 'Synthetische Testdaten'],
+  life: en
+    ? ['Godot / World view', 'Seed 42 · t = 400 s']
+    : ['Godot / Weltansicht', 'Seed 42 · t = 400 s'],
+  print: en
+    ? ['Processing stages', 'Process diagram']
+    : ['Verarbeitungsschritte', 'Ablaufskizze'],
+  shirt: en
+    ? ['Fern / Print design', 'Digital artwork']
+    : ['Farn / Druckmotiv', 'Digitaler Entwurf'],
+}[visual];
+---
+
+<figure class:list={['exhibit', `exhibit-${visual}`]}>
+  <Media
+    class="exhibit-image"
+    href={href}
+    aria-label={href ? title : undefined}
+  >
+    {cover ? (
+      <Image
+        src={cover}
+        alt={coverAlt ?? title}
+        widths={[400, 640, 900, 1200, 1500]}
+        sizes={
+          visual === 'shirt'
+            ? '(max-width: 720px) 75vw, (max-width: 1440px) 39vw, 640px'
+            : '(max-width: 720px) 92vw, (max-width: 1440px) 62vw, 1000px'
+        }
+        format="webp"
+        quality={80}
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    ) : (
+      <PrintPipeline />
+    )}
+  </Media>
+  <figcaption>
+    <span>{labels[0]}</span>
+    <span>{labels[1]}</span>
+  </figcaption>
+</figure>

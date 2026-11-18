@@ -2,7 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
 export async function getStaticPaths() {
-  return (await getCollection('writing')).map((article) => ({
+  return (
+    await getCollection('writing', ({ data }) => data.locale === 'de')
+  ).map((article) => ({
     params: { slug: article.data.slug },
     props: { article },
   }));
