@@ -33,7 +33,7 @@ test('every portfolio route is generated with a main landmark and descriptive ti
 test('the site presents Karl in German with his actual freelance offer and design project', () => {
   const html = readFileSync('dist/index.html', 'utf8');
   assert.match(html, /<html[^>]*lang="de"/);
-  assert.match(html, /Mechatronik und Informationstechnik am KIT/);
+  assert.match(html, /Mechatronik und Informationstechnik am\sKIT/);
   assert.match(html, /Karlsruhe/);
   assert.match(html, /Websites.*Software/);
   assert.match(html, /Technische Unterstützung/);

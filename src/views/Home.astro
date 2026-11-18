@@ -13,58 +13,40 @@ const path = (route: string) => localPath(locale, route);
 const projects = (
   await getCollection('projects', ({ data }) => data.locale === locale)
 ).sort((a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99));
-const hand = projects.find(({ data }) => data.slug === 'haptiq-hand');
-if (!hand) throw new Error(`Missing HaptIQ Hand case study in ${locale}`);
 const notes = (
   await getCollection('writing', ({ data }) => data.locale === locale)
 ).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <BaseLayout>
-  <section class="portfolio-hero container">
-    <div class="hero-copy">
-      <p class="hero-location mono">
-        Karlsruhe <span aria-hidden="true">/</span>{' '}
-        {en ? 'Germany' : 'Deutschland'}
-      </p>
-      <h1>
-        Karl <span class="hero-surname">Kugler</span>
-      </h1>
-      <p class="hero-role">
-        {en
-          ? 'Mechatronics and Information Technology at KIT'
-          : 'Mechatronik und Informationstechnik am KIT'}
-      </p>
-      <p class="hero-description">
-        {en
-          ? 'I build software for things I want to understand better: how a robot hand senses contact or how behaviour emerges in a simulation.'
-          : 'Ich baue Software für Dinge, die ich besser verstehen will: wie eine Roboterhand Berührung erfasst oder wie Verhalten in einer Simulation entsteht.'}
-      </p>
-      <div class="action-row">
-        <a class="button" href="#projekte">
-          {en ? 'View projects' : 'Projekte ansehen'}
-          <Arrow direction="down" />
-        </a>
-        <a class="text-link" href={path('/contact/')}>
-          {en ? 'Get in touch' : 'Kontakt'}
-          <Arrow />
-        </a>
+  <section class="forest" aria-labelledby="home-title">
+    <div class="portfolio-hero container">
+      <div>
+        <p class="hero-location mono">Karlsruhe</p>
+        <h1 id="home-title">Karl Kugler</h1>
+        <p class="hero-role">
+          {en
+            ? 'Mechatronics and Information Technology at KIT'
+            : 'Mechatronik und Informationstechnik am KIT'}
+        </p>
       </div>
-    </div>
-    <div class="hero-art">
-      <div class="hero-art-label">
-        <span>HaptIQ Hand</span>
-        <span>{en ? 'Robotics' : 'Robotik'}</span>
+      <div class="hero-aside">
+        <p>
+          {en
+            ? 'I build a viewer for tactile data from a robot hand and run experiments with digital organisms.'
+            : 'Ich baue einen Viewer für taktile Messdaten einer Roboterhand und experimentiere mit digitalen Organismen.'}
+        </p>
+        <div class="action-row">
+          <a class="button" href="#projekte">
+            {en ? 'View projects' : 'Projekte ansehen'}
+            <Arrow direction="down" />
+          </a>
+          <a class="text-link" href={path('/contact/')}>
+            {en ? 'Contact' : 'Kontakt'}
+            <Arrow />
+          </a>
+        </div>
       </div>
-      <ExhibitMedia project={hand} hero href={path('/projects/haptiq-hand/')} />
-      <ol
-        class="signal-route"
-        aria-label={en ? 'HaptIQ data flow' : 'HaptIQ Datenfluss'}
-      >
-        <li>{en ? 'Read telemetry' : 'Telemetrie lesen'}</li>
-        <li>{en ? 'Inspect contacts' : 'Kontakte zuordnen'}</li>
-        <li>{en ? 'Compare CAD' : 'CAD vergleichen'}</li>
-      </ol>
     </div>
   </section>
   <section
@@ -76,46 +58,49 @@ const notes = (
       <h2 id="selected-title">
         {en ? 'Selected work' : 'Ausgewählte Projekte'}
       </h2>
+    </div>
+    {projects.map((project) => {
+      const { data } = project;
+      const href = path(`/projects/${data.slug}/`);
+      return (
+        <article class:list={['project-spread', `spread-${data.visual}`]}>
+          <div class="project-text">
+            <p class="eyebrow">
+              {data.category} · {data.status}
+            </p>
+            <h3>{data.title}</h3>
+            <p>{data.description}</p>
+            <a
+              class="text-link"
+              href={href}
+              aria-label={
+                en
+                  ? `Project details: ${data.title}`
+                  : `Zum Projekt: ${data.title}`
+              }
+            >
+              {en ? 'Project details' : 'Zum Projekt'}
+              <Arrow />
+            </a>
+          </div>
+          <ExhibitMedia
+            project={project}
+            eager={data.visual === 'hand'}
+            href={data.cover ? href : undefined}
+          />
+        </article>
+      );
+    })}
+    <div class="selected-work-index">
       <a class="text-link" href={path('/projects/')}>
         {en ? 'Project index' : 'Projektübersicht'}
         <Arrow />
       </a>
     </div>
-    {projects.map((project) => (
-      <article class:list={['project-spread', `spread-${project.data.visual}`]}>
-        <div class="project-text">
-          <p class="eyebrow">
-            {project.data.category} <span aria-hidden="true">/</span>{' '}
-            {project.data.status}
-          </p>
-          <h3>
-            <a href={path(`/projects/${project.data.slug}/`)}>
-              {project.data.title}
-            </a>
-          </h3>
-          <p>{project.data.description}</p>
-          <a class="text-link" href={path(`/projects/${project.data.slug}/`)}>
-            {en ? 'Project details' : 'Zum Projekt'}
-            <Arrow />
-          </a>
-        </div>
-        {project.data.visual !== 'hand' && <ExhibitMedia project={project} />}
-        {project.data.visual === 'hand' && (
-          <aside class="project-question">
-            <span class="eyebrow">{en ? 'The question' : 'Die Frage'}</span>
-            <p>
-              {en
-                ? 'Where did the hand make contact during the grasp?'
-                : 'Wo genau hat die Hand beim Greifen Kontakt?'}
-            </p>
-          </aside>
-        )}
-      </article>
-    ))}
   </section>
-  <section class="portrait-band">
+  <section class="portrait-band forest">
     <div class="container portrait-band-inner">
-      <h2>{en ? 'Away from the workbench' : 'Abseits der Werkbank'}</h2>
+      <h2>{en ? 'About me' : 'Über mich'}</h2>
       <div>
         <p>
           {en
@@ -135,7 +120,7 @@ const notes = (
     aria-labelledby="collaboration-title"
   >
     <h2 id="collaboration-title">{en ? 'Work with me' : 'Zusammenarbeiten'}</h2>
-    <div class="collaboration-grid">
+    <div class="collaboration-list">
       <article>
         <h3>
           {en
@@ -168,7 +153,7 @@ const notes = (
         </a>
       </article>
       <article>
-        <h3>{en ? 'Build something together' : 'Gemeinsame Projekte'}</h3>
+        <h3>{en ? 'Joint projects' : 'Gemeinsame Projekte'}</h3>
         <p>
           {en
             ? 'If you’re working on a prototype, organising a hackathon or looking for someone to try an idea with, tell me what you have in mind.'

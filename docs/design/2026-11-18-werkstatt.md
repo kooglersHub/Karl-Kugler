@@ -1,5 +1,13 @@
 # Redesign der persönlichen Website
 
+## Korrektur nach Vergleich mit der Live-Seite
+
+Der erste Entwurf ersetzte die erkennbare Gestaltung durch Serifentitel, Neongelb und einen eingerahmten Viewer im Einstieg. Der direkte Vergleich bei 375 und 1440 Pixeln führte zurück zu den vorhandenen Waldgrün-, Creme- und Sandtönen, DM Sans und breiten, offenen Projektstrecken. Die ursprüngliche Favicon-Grafik ist wieder im Einsatz.
+
+Der Einstieg nennt Karl, den KIT-Studiengang und zwei seiner Projekte. HaptIQ steht als Fallstudie mit echtem Screenshot am Beginn der Projekte. Titel und Abbildung beginnen auf Desktop auf annähernd gleicher Höhe. Auf Mobilgeräten bringt der kürzere Einstieg die Abbildung früher in Sicht. Beide Sprachfassungen nutzen dieselben Layouts und Funktionen.
+
+Die folgenden Abschnitte halten die Recherche, die Entwurfsentscheidung und die Messungen der ersten Fassung fest.
+
 ## Ausgangspunkt
 
 Die Live-Seite vom 18. November 2026 und die Git-Historie zeigen zwei frühere Richtungen: ein technisches Case-basiertes Portfolio und einen Auftritt für Freelance- und Messearbeit in Waldgrün. Die neue Startseite stellt Studium und konkrete Projekte an den Anfang. Kooperation, Berufseinstieg und bezahlte Aufträge erhalten eigene Wege.

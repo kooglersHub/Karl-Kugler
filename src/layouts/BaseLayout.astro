@@ -1,7 +1,6 @@
 ---
 import '@fontsource/dm-sans/latin-400.css';
 import '@fontsource/dm-sans/latin-500.css';
-import '@fontsource/instrument-serif/latin-400.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import '../styles/global.css';
 import { site, navigation } from '../config';
@@ -43,7 +42,7 @@ const alternateUrl = Astro.site && new URL(alternate, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f5f3eb" />
+    <meta name="theme-color" content="#19392d" />
     {!canonical && <meta name="robots" content="noindex, nofollow" />}
     {canonical && alternateUrl && (
       <>
@@ -79,7 +78,7 @@ const alternateUrl = Astro.site && new URL(alternate, Astro.site);
     <a class="skip-link" href="#main">
       {en ? 'Skip to content' : 'Zum Inhalt'}
     </a>
-    <header class="site-header">
+    <header class="site-header forest">
       <div class="container header-inner">
         <a class="identity" href={path('/')}>
           Karl Kugler<span aria-hidden="true"></span>

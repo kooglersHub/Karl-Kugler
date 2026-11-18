@@ -6,12 +6,11 @@ import { localeFor } from '../lib/locale';
 
 interface Props {
   project: CollectionEntry<'projects'>;
-  hero?: boolean;
   eager?: boolean;
   href?: string;
 }
 
-const { project, hero = false, eager = false, href } = Astro.props;
+const { project, eager = false, href } = Astro.props;
 const Media = href ? 'a' : 'div';
 const { cover, coverAlt, title, visual } = project.data;
 const en = localeFor(Astro.url.pathname) === 'en';
@@ -31,7 +30,7 @@ const labels = {
 }[visual];
 ---
 
-<figure class:list={['exhibit', `exhibit-${visual}`, { 'exhibit-hero': hero }]}>
+<figure class:list={['exhibit', `exhibit-${visual}`]}>
   <Media
     class="exhibit-image"
     href={href}
@@ -45,14 +44,11 @@ const labels = {
         sizes={
           visual === 'shirt'
             ? '(max-width: 720px) 75vw, (max-width: 1440px) 39vw, 640px'
-            : hero
-              ? '(max-width: 720px) 92vw, (max-width: 1440px) 49vw, 710px'
-              : '(max-width: 720px) 92vw, (max-width: 1440px) 62vw, 1000px'
+            : '(max-width: 720px) 92vw, (max-width: 1440px) 62vw, 1000px'
         }
         format="webp"
-        quality={hero ? 84 : 80}
-        loading={hero || eager ? 'eager' : 'lazy'}
-        fetchpriority={hero ? 'high' : 'auto'}
+        quality={80}
+        loading={eager ? 'eager' : 'lazy'}
       />
     ) : (
       <PrintPipeline />
