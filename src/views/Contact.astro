@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
+import { site } from '../config';
+import { localeFor, localPath } from '../lib/locale';
+import { services, createEnquiryHref } from '../lib/services';
+
+const locale = localeFor(Astro.url.pathname);
+const en = locale === 'en';
+const introductions = en
+  ? [
+      [
+        'Working student roles & internships',
+        'Tell me about your team and the problem I could work on.',
+        'Working student role or internship',
+      ],
+      [
+        'Project collaboration',
+        'Send me the question you want to investigate or the prototype you have in mind.',
+        'Project collaboration',
+      ],
+    ]
+  : [
+      [
+        'Werkstudium & Praktikum',
+        'Erzähl mir von eurem Team und von der Aufgabe, an der ich mitarbeiten könnte.',
+        'Werkstudium oder Praktikum',
+      ],
+      [
+        'Gemeinsame Projekte',
+        'Schreib mir, welche Frage du untersuchen oder welchen Prototyp du ausprobieren willst.',
+        'Gemeinsames Projekt',
+      ],
+    ];
+---
+
+<BaseLayout
+  title={en ? 'Contact' : 'Kontakt'}
+  description={
+    en
+      ? 'Contact Karl Kugler about roles, freelance work and collaboration.'
+      : 'Kontakt zu Karl Kugler für Werkstudium, Praktikum, Freelance-Aufträge oder gemeinsame Projekte.'
+  }
+>
+  <header class="container page-intro contact-intro">
+    <h1>{en ? 'Contact' : 'Kontakt'}</h1>
+    <div>
+      <p class="intro-description">
+        {en
+          ? 'Tell me what you’re working on and where you could use a hand.'
+          : 'Schreib mir, woran du arbeitest und wobei du Unterstützung suchst.'}
+      </p>
+      <a class="contact-email" href={`mailto:${site.email}`}>
+        {site.email}
+      </a>
+      <div class="action-row">
+        <a class="text-link" href={site.github}>
+          GitHub
+          <Arrow />
+        </a>
+        <a class="text-link" href={site.linkedin}>
+          LinkedIn
+          <Arrow />
+        </a>
+      </div>
+    </div>
+  </header>
+  <section
+    class="container contact-choices page-body"
+    aria-label={en ? 'Ways to get in touch' : 'Anliegen'}
+  >
+    {introductions.map(([title, detail, subject]) => (
+      <article>
+        <h2>{title}</h2>
+        <div>
+          <p>{detail}</p>
+          <a
+            class="text-link"
+            href={`mailto:${site.email}?subject=${encodeURIComponent(subject)}`}
+          >
+            {en ? 'Write an email' : 'E-Mail schreiben'}
+            <Arrow />
+          </a>
+        </div>
+      </article>
+    ))}
+    <article id="freelance">
+      <h2>Freelance</h2>
+      <div>
+        <p>
+          {en
+            ? 'A short brief and a rough timeframe help me understand the work. For events, include the location and date.'
+            : 'Eine kurze Beschreibung und ein grober Zeitrahmen helfen mir bei der Einschätzung. Bei Events sind Ort und Datum hilfreich.'}
+        </p>
+        <div
+          class="enquiry-options"
+          aria-label={en ? 'Choose a subject' : 'Anliegen auswählen'}
+        >
+          {services.map((service) => (
+            <a
+              href={createEnquiryHref(site.email, service.id, locale)}
+              data-selection={localPath(
+                locale,
+                `/contact/?anliegen=${service.id}#freelance`,
+              )}
+              data-enquiry={service.id}
+            >
+              {en ? service.en.title : service.title}
+            </a>
+          ))}
+        </div>
+        <div class="enquiry-box">
+          <h3 id="enquiry-title">
+            {en ? 'Discuss a brief' : 'Auftrag besprechen'}
+          </h3>
+          <p id="enquiry-brief">
+            {en
+              ? 'Tell me what you need and when.'
+              : 'Schreib mir, was entstehen soll und bis wann.'}
+          </p>
+          <a
+            class="button"
+            id="enquiry-email"
+            href={createEnquiryHref(site.email, null, locale)}
+            data-email={site.email}
+          >
+            {en ? 'Open an email draft' : 'Anfrage per E-Mail'}
+            <Arrow />
+          </a>
+        </div>
+      </div>
+    </article>
+  </section>
+  <script>
+    import { getService, createEnquiryHref } from '../lib/services';
+    import { localeFor } from '../lib/locale';
+    const id = new URLSearchParams(location.search).get('anliegen');
+    const service = getService(id);
+    if (service) {
+      const locale = localeFor(location.pathname);
+      const copy = locale === 'en' ? service.en : service;
+      const title = document.querySelector('#enquiry-title');
+      const brief = document.querySelector('#enquiry-brief');
+      const email = document.querySelector<HTMLAnchorElement>('#enquiry-email');
+      if (title) title.textContent = copy.title;
+      if (brief) brief.textContent = copy.brief;
+      if (email?.dataset.email)
+        email.href = createEnquiryHref(email.dataset.email, id, locale);
+    }
+    document
+      .querySelectorAll<HTMLAnchorElement>('[data-enquiry]')
+      .forEach((link) => {
+        if (link.dataset.selection) link.href = link.dataset.selection;
+        if (service && link.dataset.enquiry === service.id)
+          link.setAttribute('aria-current', 'true');
+      });
+  </script>
+</BaseLayout>

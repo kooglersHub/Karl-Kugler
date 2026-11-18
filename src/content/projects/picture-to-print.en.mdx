@@ -1,0 +1,30 @@
+---
+locale: en
+slug: picture-to-print
+title: Picture to Print
+description: Photos become 3D meshes. I’m building a workflow to inspect, repair and export that geometry for printing.
+category: 3D printing
+technologies: [Python, TRELLIS, MeshLib, Blender]
+year: 2026
+status: Prototype
+contribution: Geometry generation, repair, comparison and export workflow
+featuredOrder: 3
+repositoryUrl: https://github.com/kooglersHub/Picture-to-Print
+visual: print
+---
+
+## From a photo to a mesh
+
+A model can look convincing on screen and still have open edges, loose parts or thin walls. I wanted to see what changed between the original geometry and the exported file.
+
+## Comparing repairs on the same input
+
+The application isolates the subject and uses TRELLIS to generate a mesh. MeshLib or Blender prepare the surface for export as STL or 3MF. The original mesh, size and resolution stay fixed for a comparison. I can change the repair tool without introducing another inference run.
+
+## Seeing where the shape changed
+
+Intermediate previews share a scale, origin and camera. A repair can close edges and remove surface details at the same time. Counts of open edges and disconnected components and a surface-distance report help me find those cases. Diagnostic geometry is stored separately from the print export.
+
+## Status
+
+The repository documents the workflow from an example photo through GPU inference to closed STL and 3MF downloads. Both repair paths have been exercised. Wall thickness, loose parts and supports still need checking before printing. The source code is public.

@@ -1,0 +1,35 @@
+---
+locale: en
+slug: evolab
+title: EvoLab
+description: I’m building a world where digital organisms use energy, find food and pass on their neural controllers.
+category: Simulation
+technologies: [C++17, Godot, Python]
+year: 2026
+status: Experiment
+contribution: Simulation, experiment design and analysis tools
+featuredOrder: 2
+visual: life
+cover: ../../assets/evolab-world.webp
+coverAlt: EvoLab in Godot. The last living creature is selected beside a river and forest. The sidebar shows energy, generation and ancestry.
+---
+
+## What keeps a population alive?
+
+I wanted to watch a population respond when its environment changes. In EvoLab, movement, recovery and signalling cost energy. Food can keep an organism alive long enough to reproduce. Mutations change the weights of inherited neural networks.
+
+## One world, two ways to explore it
+
+A C++17 core holds the rules and the world state. Godot handles rendering and input. In the interface I can follow a creature, inspect its ancestry and adjust world rules. The command line runs the same experiment without a graphical interface. Saved checkpoints also retain the state of the random-number generators.
+
+## What the screenshot shows
+
+With seed 42, one creature remained after 400 simulated seconds. The population had died out by 600 seconds. Two other seeds behaved differently under the same settings. Those differences are why I avoid drawing conclusions from a single run.
+
+## Separating evolution from learning
+
+By default, networks change between generations. An optional experiment allows an individual to change its weights during its lifetime. Offspring do not inherit the acquired changes. I compare learning runs with controls that have similar costs and comparable exploration.
+
+## Status
+
+EvoLab is an experiment about the consequences of its world rules. Desktop and command-line source packages are prepared. The source repository is private. The image is from a documented run of the Godot application.

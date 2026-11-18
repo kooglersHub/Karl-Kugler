@@ -3,27 +3,30 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
+// Keep the public slug common to both languages while giving Astro distinct entry IDs.
+const entryId = ({ entry }: { entry: string }) => entry.replace(/\.mdx$/, '');
+
+const localizedEntry = {
+  locale: z.enum(['de', 'en']).default('de'),
+  slug: z.string().regex(/^[a-z0-9-]+$/),
+  title: z.string(),
+  description: z.string(),
+};
+
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
+  loader: glob({
+    pattern: '**/*.mdx',
+    generateId: entryId,
+    base: './src/content/projects',
+  }),
   schema: ({ image }) =>
     z.object({
-      slug: z.string().regex(/^[a-z0-9-]+$/),
-      title: z.string(),
-      description: z.string(),
-      category: z.enum([
-        'Robotik',
-        'Künstliches Leben',
-        'Software',
-        'Design & Web',
-      ]),
+      ...localizedEntry,
+      category: z.string().min(1),
       technologies: z.array(z.string()),
       year: z.number().int(),
-      status: z.enum([
-        'In Entwicklung',
-        'Experimentell',
-        'Abgeschlossen',
-        'Archiviert',
-      ]),
+      status: z.string().min(1),
+      contribution: z.string().min(1),
       featuredOrder: z.number().optional(),
       cover: image().optional(),
       coverAlt: z.string().optional(),
@@ -39,16 +42,18 @@ const projects = defineCollection({
       demoUrl: z.url().optional(),
       repositoryUrl: z.url().optional(),
       links: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
-      visual: z.enum(['hand', 'life', 'shirt']),
+      visual: z.enum(['hand', 'life', 'shirt', 'print']),
     }),
 });
 
 const writing = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/writing' }),
+  loader: glob({
+    pattern: '**/*.mdx',
+    generateId: entryId,
+    base: './src/content/writing',
+  }),
   schema: z.object({
-    slug: z.string().regex(/^[a-z0-9-]+$/),
-    title: z.string(),
-    description: z.string(),
+    ...localizedEntry,
     date: z.coerce.date(),
     tags: z.array(z.string()).default([]),
   }),

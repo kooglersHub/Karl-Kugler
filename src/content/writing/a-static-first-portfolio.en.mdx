@@ -1,0 +1,22 @@
+---
+locale: en
+slug: a-static-first-portfolio
+title: Let the content do the work
+description: Why this site starts with HTML, typed content and a small amount of JavaScript.
+date: 2026-11-01
+tags: [Web development, Decisions]
+---
+
+A project page has a simple job: show the work, explain the decisions and make the next step easy. I start with static pages because most of that work can be done in HTML. Astro builds the pages, and MDX lets me keep case studies and notes alongside their metadata.
+
+## A shared structure leaves room for different work
+
+Each project has a status, a description and a record of my contribution. Optional media and links let me use the evidence I actually have. A robotics project can explain a measurement procedure, a simulation can explain controls, and a print design can show its artwork.
+
+## Add JavaScript where it helps
+
+Category filters, theme persistence and prefilled email subjects use small scripts. The signal experiment only loads its code on the lab page. Navigation, project pages and email links are ordinary HTML.
+
+## Keep a base that works
+
+The project began with [Case](https://github.com/erlandv/case), an MIT-licensed Astro theme built around case studies. The current typography, layout and project exhibits are specific to this site. The build still produces regular files, which means the content can run on a static host.

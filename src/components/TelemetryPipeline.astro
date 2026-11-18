@@ -1,21 +1,33 @@
 ---
-const steps = [
-  { title: 'Erfassen', description: 'Passive Modbus-Telemetrie' },
-  { title: 'Ansehen', description: 'Live-Ansicht oder Aufzeichnung' },
-  { title: 'Festhalten', description: 'Ein definierter Messstand' },
-  { title: 'Vergleichen', description: 'Mögliche CAD-Platzierungen' },
-];
+import { localeFor } from '../lib/locale';
+const en = localeFor(Astro.url.pathname) === 'en';
+const steps = en
+  ? [
+      ['Capture', 'Passive Modbus telemetry'],
+      ['Inspect', 'Live or recorded grasps'],
+      ['Freeze', 'A fixed measurement snapshot'],
+      ['Compare', 'Candidate CAD placements'],
+    ]
+  : [
+      ['Erfassen', 'Passive Modbus-Telemetrie'],
+      ['Ansehen', 'Live-Ansicht oder Aufzeichnung'],
+      ['Festhalten', 'Ein definierter Messstand'],
+      ['Vergleichen', 'Mögliche CAD-Platzierungen'],
+    ];
 ---
 
-<figure class="telemetry-pipeline" aria-label="HaptIQ-Messablauf">
-  <span class="eyebrow">Von der Beobachtung zur Schätzung</span>
+<figure class="telemetry-pipeline">
+  <figcaption>
+    {en
+      ? 'From observation to estimation'
+      : 'Von der Beobachtung zur Schätzung'}
+  </figcaption>
   <ol>
-    {steps.map((step, index) => (
+    {steps.map(([title, description]) => (
       <li>
-        <span class="mono">0{index + 1}</span>
         <div>
-          <strong>{step.title}</strong>
-          <p>{step.description}</p>
+          <strong>{title}</strong>
+          <p>{description}</p>
         </div>
       </li>
     ))}

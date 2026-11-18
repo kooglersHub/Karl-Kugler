@@ -1,0 +1,27 @@
+---
+import { localeFor } from '../lib/locale';
+const en = localeFor(Astro.url.pathname) === 'en';
+const stages = en
+  ? [
+      ['Photo', 'Isolate the subject'],
+      ['Raw mesh', 'Generate geometry'],
+      ['Print file', 'Repair and inspect'],
+    ]
+  : [
+      ['Foto', 'Motiv freistellen'],
+      ['Rohmesh', 'Geometrie erzeugen'],
+      ['Druckdatei', 'Reparieren und prüfen'],
+    ];
+---
+
+<ol
+  class="print-pipeline"
+  aria-label={en ? 'Photo-to-print process' : 'Vom Foto zur Druckdatei'}
+>
+  {stages.map(([title, detail]) => (
+    <li>
+      <strong>{title}</strong>
+      <span>{detail}</span>
+    </li>
+  ))}
+</ol>

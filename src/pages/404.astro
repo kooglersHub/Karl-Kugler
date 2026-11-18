@@ -1,21 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import NotFound from '../views/NotFound.astro';
 ---
 
-<BaseLayout title="Seite nicht gefunden">
-  <section class="page-intro container not-found">
-    <span class="eyebrow">404 / Neben der Spur</span>
-    <h1>
-      Ein kleiner
-      <br />
-      <em>Umweg.</em>
-    </h1>
-    <p class="intro-description">
-      Diese Seite gibt es hier nicht. Auf der Startseite findest du zurück zu
-      den Projekten.
-    </p>
-    <a class="text-link mt-8" href="/">
-      Zur Startseite <span aria-hidden="true">↗</span>
-    </a>
-  </section>
-</BaseLayout>
+<NotFound />

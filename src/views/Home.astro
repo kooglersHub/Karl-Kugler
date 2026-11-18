@@ -1,0 +1,220 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Arrow from '../components/Arrow.astro';
+import ExhibitMedia from '../components/ExhibitMedia.astro';
+import { localeFor, localPath } from '../lib/locale';
+import { site } from '../config';
+import { services } from '../lib/services';
+
+const locale = localeFor(Astro.url.pathname);
+const en = locale === 'en';
+const path = (route: string) => localPath(locale, route);
+const projects = (
+  await getCollection('projects', ({ data }) => data.locale === locale)
+).sort((a, b) => (a.data.featuredOrder ?? 99) - (b.data.featuredOrder ?? 99));
+const hand = projects.find(({ data }) => data.slug === 'haptiq-hand');
+if (!hand) throw new Error(`Missing HaptIQ Hand case study in ${locale}`);
+const notes = (
+  await getCollection('writing', ({ data }) => data.locale === locale)
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout>
+  <section class="portfolio-hero container">
+    <div class="hero-copy">
+      <p class="hero-location mono">
+        Karlsruhe <span aria-hidden="true">/</span>{' '}
+        {en ? 'Germany' : 'Deutschland'}
+      </p>
+      <h1>
+        Karl <span class="hero-surname">Kugler</span>
+      </h1>
+      <p class="hero-role">
+        {en
+          ? 'Mechatronics and Information Technology at KIT'
+          : 'Mechatronik und Informationstechnik am KIT'}
+      </p>
+      <p class="hero-description">
+        {en
+          ? 'I build software for things I want to understand better: how a robot hand senses contact or how behaviour emerges in a simulation.'
+          : 'Ich baue Software für Dinge, die ich besser verstehen will: wie eine Roboterhand Berührung erfasst oder wie Verhalten in einer Simulation entsteht.'}
+      </p>
+      <div class="action-row">
+        <a class="button" href="#projekte">
+          {en ? 'View projects' : 'Projekte ansehen'}
+          <Arrow direction="down" />
+        </a>
+        <a class="text-link" href={path('/contact/')}>
+          {en ? 'Get in touch' : 'Kontakt'}
+          <Arrow />
+        </a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-art-label">
+        <span>HaptIQ Hand</span>
+        <span>{en ? 'Robotics' : 'Robotik'}</span>
+      </div>
+      <ExhibitMedia project={hand} hero href={path('/projects/haptiq-hand/')} />
+      <ol
+        class="signal-route"
+        aria-label={en ? 'HaptIQ data flow' : 'HaptIQ Datenfluss'}
+      >
+        <li>{en ? 'Read telemetry' : 'Telemetrie lesen'}</li>
+        <li>{en ? 'Inspect contacts' : 'Kontakte zuordnen'}</li>
+        <li>{en ? 'Compare CAD' : 'CAD vergleichen'}</li>
+      </ol>
+    </div>
+  </section>
+  <section
+    id="projekte"
+    class="container selected-work"
+    aria-labelledby="selected-title"
+  >
+    <div class="section-heading">
+      <h2 id="selected-title">
+        {en ? 'Selected work' : 'Ausgewählte Projekte'}
+      </h2>
+      <a class="text-link" href={path('/projects/')}>
+        {en ? 'Project index' : 'Projektübersicht'}
+        <Arrow />
+      </a>
+    </div>
+    {projects.map((project) => (
+      <article class:list={['project-spread', `spread-${project.data.visual}`]}>
+        <div class="project-text">
+          <p class="eyebrow">
+            {project.data.category} <span aria-hidden="true">/</span>{' '}
+            {project.data.status}
+          </p>
+          <h3>
+            <a href={path(`/projects/${project.data.slug}/`)}>
+              {project.data.title}
+            </a>
+          </h3>
+          <p>{project.data.description}</p>
+          <a class="text-link" href={path(`/projects/${project.data.slug}/`)}>
+            {en ? 'Project details' : 'Zum Projekt'}
+            <Arrow />
+          </a>
+        </div>
+        {project.data.visual !== 'hand' && <ExhibitMedia project={project} />}
+        {project.data.visual === 'hand' && (
+          <aside class="project-question">
+            <span class="eyebrow">{en ? 'The question' : 'Die Frage'}</span>
+            <p>
+              {en
+                ? 'Where did the hand make contact during the grasp?'
+                : 'Wo genau hat die Hand beim Greifen Kontakt?'}
+            </p>
+          </aside>
+        )}
+      </article>
+    ))}
+  </section>
+  <section class="portrait-band">
+    <div class="container portrait-band-inner">
+      <h2>{en ? 'Away from the workbench' : 'Abseits der Werkbank'}</h2>
+      <div>
+        <p>
+          {en
+            ? 'I live in Karlsruhe and study at KIT. I spent several months travelling and working in New Zealand. Back home, I make time for volleyball, climbing and running.'
+            : 'Ich lebe in Karlsruhe und studiere am KIT. In Neuseeland war ich mehrere Monate unterwegs und habe in verschiedenen Jobs gearbeitet. Hier nehme ich mir Zeit für Volleyball, Klettern und Laufen.'}
+        </p>
+        <a class="text-link" href={path('/about/')}>
+          {en ? 'More about me' : 'Mehr über mich'}
+          <Arrow />
+        </a>
+      </div>
+    </div>
+  </section>
+  <section
+    id="leistungen"
+    class="container collaboration"
+    aria-labelledby="collaboration-title"
+  >
+    <h2 id="collaboration-title">{en ? 'Work with me' : 'Zusammenarbeiten'}</h2>
+    <div class="collaboration-grid">
+      <article>
+        <h3>
+          {en
+            ? 'Working student roles & internships'
+            : 'Werkstudium & Praktikum'}
+        </h3>
+        <p>
+          {en
+            ? 'I’m interested in teams where I can work on robotics, software or hardware prototypes and learn how they are tested in practice.'
+            : 'Mich interessieren Teams, in denen ich an Robotik, Software oder Hardwareprototypen mitarbeiten und lernen kann, wie sie in der Praxis getestet werden.'}
+        </p>
+        <a
+          class="text-link"
+          href={`mailto:${site.email}?subject=${encodeURIComponent(en ? 'Working student role or internship' : 'Werkstudium oder Praktikum')}`}
+        >
+          {en ? 'Discuss a role' : 'Über eine Stelle sprechen'}
+          <Arrow />
+        </a>
+      </article>
+      <article>
+        <h3>Freelance</h3>
+        <p>
+          {en
+            ? 'I can build a website or web app, automate a manual workflow, integrate an AI model or help get a technical prototype working.'
+            : 'Ich entwickle Websites und Webanwendungen, automatisiere manuelle Abläufe, binde KI-Modelle ein und helfe bei technischen Prototypen.'}
+        </p>
+        <a class="text-link" href={path('/contact/#freelance')}>
+          {en ? 'Discuss a brief' : 'Auftrag besprechen'}
+          <Arrow />
+        </a>
+      </article>
+      <article>
+        <h3>{en ? 'Build something together' : 'Gemeinsame Projekte'}</h3>
+        <p>
+          {en
+            ? 'If you’re working on a prototype, organising a hackathon or looking for someone to try an idea with, tell me what you have in mind.'
+            : 'Du arbeitest an einem Prototyp, organisierst einen Hackathon oder suchst jemanden, um eine Idee auszuprobieren? Schreib mir, was du vorhast.'}
+        </p>
+        <a
+          class="text-link"
+          href={`mailto:${site.email}?subject=${encodeURIComponent(en ? 'Project collaboration' : 'Gemeinsames Projekt')}`}
+        >
+          {en ? 'Share an idea' : 'Eine Idee teilen'}
+          <Arrow />
+        </a>
+      </article>
+    </div>
+    <details class="service-details">
+      <summary>
+        {en
+          ? 'Freelance services, including events'
+          : 'Freelance-Leistungen im Detail, auch für Events'}
+      </summary>
+      {services.map((service) => (
+        <a
+          class="service-row"
+          href={path(`/contact/?anliegen=${service.id}#freelance`)}
+        >
+          <strong>{en ? service.en.title : service.title}</strong>
+          <span>{en ? service.en.description : service.description}</span>
+          <Arrow />
+        </a>
+      ))}
+    </details>
+  </section>
+  <section class="container notes-section" aria-labelledby="notes-title">
+    <div class="section-heading">
+      <h2 id="notes-title">{en ? 'Notes' : 'Notizen'}</h2>
+      <a class="text-link" href={path('/lab/')}>
+        {en ? 'Sampling experiment' : 'Experiment zur Abtastung'}
+        <Arrow />
+      </a>
+    </div>
+    {notes.map(({ data }) => (
+      <a class="note-row" href={path(`/writing/${data.slug}/`)}>
+        <span class="mono">{data.tags[0]}</span>
+        <span>{data.title}</span>
+        <Arrow />
+      </a>
+    ))}
+  </section>
+</BaseLayout>

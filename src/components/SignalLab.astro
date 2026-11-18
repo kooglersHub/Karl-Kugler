@@ -1,4 +1,6 @@
 ---
+import { localeFor } from '../lib/locale';
+const en = localeFor(Astro.url.pathname) === 'en';
 const curve = Array.from(
   { length: 401 },
   (_, i) =>
@@ -9,24 +11,33 @@ const curve = Array.from(
 <section class="signal-lab" aria-labelledby="signal-title">
   <div class="lab-heading">
     <div>
-      <span class="eyebrow">Experiment 01 / Signale & Abtastung</span>
-      <h2 id="signal-title">Zwischen den Punkten.</h2>
+      <span class="eyebrow">
+        {en ? 'Interactive experiment' : 'Interaktiver Versuch'}
+      </span>
+      <h2 id="signal-title">
+        {en ? 'Sampling a sine wave' : 'Eine Sinuswelle abtasten'}
+      </h2>
     </div>
     <p>
-      Wie viel von einem Signal siehst du? Ändere die Abtastrate und beobachte,
-      wie aus einer Welle einzelne Messpunkte werden.
+      {en
+        ? 'Change the sample rate to see which points the sensor would record.'
+        : 'Ändere die Abtastrate und sieh, welche Punkte der Sensor erfasst.'}
     </p>
   </div>
   <div class="signal-display">
     <div class="signal-legend mono">
-      <span>— KONTINUIERLICHES SIGNAL</span>
-      <span>● MESSPUNKTE</span>
-      <span>IDEALISIERT / OHNE RAUSCHEN</span>
+      <span>{en ? '— Continuous signal' : '— Kontinuierliches Signal'}</span>
+      <span>{en ? '● Samples' : '● Messpunkte'}</span>
+      <span>{en ? 'Idealised / no noise' : 'Idealisiert / ohne Rauschen'}</span>
     </div>
     <svg
       viewBox="0 0 880 300"
       role="img"
-      aria-label="Eine kontinuierliche Sinuswelle und ihre abgetasteten Messpunkte"
+      aria-label={
+        en
+          ? 'A sine wave and its samples'
+          : 'Eine Sinuswelle und ihre abgetasteten Messpunkte'
+      }
       id="signal-plot"
     >
       <defs>
@@ -54,7 +65,7 @@ const curve = Array.from(
         stroke="#bacfa6"
         stroke-width="2"
       />
-      <g id="signal-samples" fill="#e2b893" stroke="#e2b893">
+      <g id="signal-samples" fill="#d9e768" stroke="#d9e768">
         {Array.from({ length: 25 }, (_, i) => {
           const x = 40 + (i / 24) * 800;
           const y = 150 - Math.sin((i / 24) * 4 * Math.PI) * 88;
@@ -88,7 +99,7 @@ const curve = Array.from(
   <div class="signal-controls" hidden>
     <div>
       <label for="frequency">
-        Signalfrequenz
+        {en ? 'Signal frequency' : 'Signalfrequenz'}
         <output id="frequency-value" for="frequency">
           2 Hz
         </output>
@@ -97,9 +108,9 @@ const curve = Array.from(
     </div>
     <div>
       <label for="sample-rate">
-        Abtastrate
+        {en ? 'Sample rate' : 'Abtastrate'}
         <output id="sample-value" for="sample-rate">
-          24 Messungen/s
+          {en ? '24 samples/s' : '24 Messungen/s'}
         </output>
       </label>
       <input
@@ -113,13 +124,15 @@ const curve = Array.from(
     </div>
   </div>
   <p class="signal-readout" role="status" aria-live="polite">
-    Eine ideale 2-Hz-Sinuswelle mit 24 Messungen pro Sekunde. Die Abtastrate
-    liegt über der Nyquist-Grenze.
+    {en
+      ? 'An ideal 2 Hz sine wave at 24 samples per second, above the Nyquist limit.'
+      : 'Eine ideale 2-Hz-Sinuswelle mit 24 Messungen pro Sekunde. Die Abtastrate liegt über der Nyquist-Grenze.'}
   </p>
   <noscript>
     <p class="signal-readout">
-      JavaScript ist ausgeschaltet. Dieses statische Beispiel zeigt eine
-      2-Hz-Welle mit 24 Messungen pro Sekunde.
+      {en
+        ? 'The diagram shows a fixed example without JavaScript.'
+        : 'Ohne JavaScript zeigt das Diagramm ein festes Beispiel.'}
     </p>
   </noscript>
 </section>
@@ -129,6 +142,20 @@ const curve = Array.from(
   const curve = document.querySelector('#signal-curve');
   const samples = document.querySelector('#signal-samples');
   const controls = document.querySelector<HTMLElement>('.signal-controls');
+  const en = document.documentElement.lang === 'en';
+  const unit = en ? 'samples/s' : 'Messungen/s';
+  const messages = en
+    ? [
+        'Below the Nyquist limit: distinct signals can produce identical samples (aliasing).',
+        'At the Nyquist limit: this phase can yield only zeros. Sample faster.',
+        'Above the Nyquist limit: enough samples for this ideal band-limited signal.',
+      ]
+    : [
+        'Unter der Nyquist-Grenze: Verschiedene Signale können dieselben Messpunkte ergeben (Aliasing).',
+        'An der Nyquist-Grenze: Diese Phase kann ausschließlich Nullwerte liefern. Eine höhere Abtastrate ist nötig.',
+        'Über der Nyquist-Grenze: genügend Messpunkte für dieses ideale bandbegrenzte Signal.',
+      ];
+
   function updateSignal() {
     if (!frequency || !sampleRate || !curve || !samples) return;
     const hz = Number(frequency.value);
@@ -166,9 +193,9 @@ const curve = Array.from(
     const sampleValue = document.querySelector('#sample-value');
     const status = document.querySelector('.signal-readout');
     if (frequencyValue) frequencyValue.textContent = `${hz} Hz`;
-    if (sampleValue) sampleValue.textContent = `${rate} Messungen/s`;
+    if (sampleValue) sampleValue.textContent = `${rate} ${unit}`;
     if (status)
-      status.textContent = `${hz} Hz · ${rate} Messungen/s. ${rate > hz * 2 ? 'Über der Nyquist-Grenze: genügend Messpunkte für dieses ideale bandbegrenzte Signal.' : rate === hz * 2 ? 'An der Nyquist-Grenze: Diese Phase kann ausschließlich Nullwerte liefern. Eine höhere Abtastrate ist nötig.' : 'Unter der Nyquist-Grenze: Verschiedene kontinuierliche Signale können dieselben Messpunkte ergeben (Aliasing).'}`;
+      status.textContent = `${hz} Hz · ${rate} ${unit}. ${messages[Math.sign(rate - hz * 2) + 1]}`;
   }
   if (controls && frequency && sampleRate) {
     controls.hidden = false;

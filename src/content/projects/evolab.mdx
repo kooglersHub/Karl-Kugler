@@ -1,41 +1,34 @@
 ---
 slug: evolab
 title: EvoLab
-description: Eine kleine Welt für große Fragen. Vererbte neuronale Steuerungen, veränderliche Umgebungen und künstliches Leben.
-category: Künstliches Leben
-technologies: [C++17, Godot, Neuronale Steuerung]
+description: Ich baue eine Welt, in der digitale Organismen Energie verbrauchen, Nahrung finden und ihre neuronale Steuerung vererben.
+category: Simulation
+technologies: [C++17, Godot, Python]
 year: 2026
-status: Experimentell
-featuredOrder: 3
+status: Experiment
+contribution: Simulation, Versuchsaufbau und Werkzeuge zur Auswertung
+featuredOrder: 2
 visual: life
+cover: ../../assets/evolab-world.webp
+coverAlt: EvoLab in Godot. In einer Fluss- und Waldlandschaft ist das letzte lebende Tier ausgewählt. Die Seitenleiste zeigt Energie, Generation und Abstammung.
 ---
 
-## Eine Welt, die Fragen zulässt
+## Was hält eine Population am Leben?
 
-EvoLab untersucht digitale Organismen und die Regeln, die ihr Verhalten prägen. In der aktuellen nativen Anwendung laufen biologische Regeln, neuronale Steuerung und Weltzustand im C++17-Kern. Godot übernimmt Darstellung und Eingaben.
+Ich wollte einer Population dabei zusehen können, wie sie auf eine veränderte Umgebung reagiert. In EvoLab kosten Bewegung, Erholung und Signale Energie. Nahrung ermöglicht es den Organismen, lange genug zu überleben, um sich fortzupflanzen. Mutationen verändern dabei die Gewichte ihrer vererbten neuronalen Netze.
 
-Die Organismen treffen auf Ressourcen, Energiekosten, Gelände, Jahreszeiten und Fortpflanzung. Interessant ist nicht allein, ob ein bewegtes Wesen lebendig wirkt, sondern welche Mechanismen sein beobachtbares Verhalten erklären.
+## Eine Welt, zwei Zugänge
 
-## Evolution und Lernen auseinanderhalten
+Die Regeln und der Weltzustand liegen in einem C++17-Kern. Godot übernimmt Darstellung und Eingaben. In der Oberfläche kann ich ein Tier verfolgen, seine Abstammung nachsehen und Weltregeln verändern. Über die Kommandozeile kann ich denselben Versuch ohne Oberfläche wiederholen. Ein gespeicherter Ausgangszustand enthält dafür auch den Zustand der Zufallszahlengeneratoren.
 
-In der Standardwelt verändern sich Steuerungen durch Vererbung, Mutation und Selektion. Ein optionaler Versuchsmodus lässt einzelne Organismen während ihres Lebens eigene Steuerparameter anpassen. Diese erworbenen Änderungen vererben ihre Kinder nicht.
+## Was der Screenshot zeigt
 
-Diese Trennung erlaubt unterschiedliche Fragen. Eine Parameteränderung lässt sich beobachten; ein nützlicher Fortschritt muss weiterhin durch einen Vergleich geprüft werden.
+Bei Seed 42 war nach 400 simulierten Sekunden noch ein Tier am Leben. Nach 600 Sekunden war die Population ausgestorben. Zwei andere Seeds verhielten sich unter denselben Einstellungen anders. Solche Unterschiede sind der Grund, warum ich einen einzelnen Verlauf nicht als Ergebnis für die ganze Simulation lese.
 
-## Werkzeuge zum Hinsehen
+## Evolution und Lernen trennen
 
-Das Labor verbindet Organismusinspektor, Gehirnansicht, Abstammung, Verläufe, Eingriffe und A/B-Vergleiche. Verzeichnete Herkunft und Todesursachen bleiben einsehbar. Unbekannte Geschichte bleibt unbekannt.
+Standardmäßig ändern sich die Netze zwischen Generationen. Ein optionaler Versuchsmodus erlaubt einem Organismus, eigene Gewichte während seines Lebens zu ändern. Die erworbenen Änderungen gehen nicht an die Nachkommen. Für Lernversuche vergleiche ich die Gewichtsanpassung mit ähnlichen Kosten und vergleichbarer Erkundung.
 
-Die Weltsteuerung unterscheidet laufende Regeln von Anfangsbedingungen für eine neue Welt. So wird ein Effekt nicht einer Änderung zugeschrieben, die die aktuelle Population gar nicht betrifft.
+## Stand
 
-## Ein Experiment braucht eine Referenz
-
-Kontrollgruppen helfen, scheinbaren Fortschritt zu hinterfragen. Signalversuche unterscheiden den Empfang eines Signals von den Energiekosten des Sendens. Lernversuche vergleichen Gewichtsänderungen mit vergleichbarer Erkundung und vergleichbaren Kosten.
-
-Die Projektdokumentation berichtet für einen frühen Signalvergleich keinen Empfangsvorteil. Ein überzeugender individueller Übertragungsnutzen auf Naturkarten ist bislang nicht belegt. Diese Grenzen gehören zur Interpretation der Ergebnisse.
-
-## Aktueller Umfang
-
-EvoLab ist ein experimentelles System für künstliches Leben, kein validiertes Modell biologischer Evolution. Ergebnisse hängen von Weltregeln und wiederholten unabhängigen Läufen ab. Ein erfolgreicher Verlauf belegt noch keinen allgemeinen Zusammenhang.
-
-Das Repository ist privat. Die Grafik auf dieser Website ist eine **Konzeptzeichnung**, kein Screenshot und kein Messergebnis. Die Beschreibung folgt der aktuellen nativen README; historische Ergebnisse der Python-Referenz werden nicht als Ergebnisse der nativen Anwendung ausgegeben.
+EvoLab ist ein Experiment über die Folgen seiner Weltregeln. Ein Desktop-Quellpaket und ein Kommandozeilen-Build sind vorbereitet. Das Quellrepository ist privat. Die Abbildung zeigt einen dokumentierten Lauf der Godot-Anwendung.

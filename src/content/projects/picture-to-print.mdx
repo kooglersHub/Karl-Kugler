@@ -1,0 +1,29 @@
+---
+slug: picture-to-print
+title: Picture to Print
+description: Aus Fotos entstehen 3D-Netze. Ich baue den Ablauf, mit dem ich die Geometrie prüfen, reparieren und für den Druck exportieren kann.
+category: 3D-Druck
+technologies: [Python, TRELLIS, MeshLib, Blender]
+year: 2026
+status: Prototyp
+contribution: Ablauf für Geometrieerzeugung, Reparatur, Vergleich und Export
+featuredOrder: 3
+repositoryUrl: https://github.com/kooglersHub/Picture-to-Print
+visual: print
+---
+
+## Vom Foto zur Geometrie
+
+Ein 3D-Modell kann auf dem Bildschirm plausibel aussehen und trotzdem offene Kanten, lose Teile oder zu dünne Stellen haben. Ich wollte sehen können, was zwischen dem ersten Rohmesh und der exportierten Datei passiert.
+
+## Dasselbe Rohmesh vergleichen
+
+Die Anwendung stellt das Motiv frei und erzeugt mit TRELLIS ein Rohmesh. MeshLib oder Blender bereiten die Oberfläche für den Export als STL oder 3MF auf. Für einen Vergleich bleiben Rohmesh, Größe und Auflösung gleich. So kann ich das Reparaturwerkzeug wechseln, ohne die Laufzeit und Form einer zweiten Generierung mitzumessen.
+
+## Formverlust sichtbar machen
+
+Die Zwischenansichten teilen Maßstab, Ursprung und Kamera. Ein Reparaturschritt kann offene Kanten schließen und zugleich Details entfernen. Anzahl der offenen Kanten, getrennte Teile und Oberflächenabweichung helfen mir, solche Fälle zu erkennen. Die Vorschau speichert Diagnosegeometrie separat.
+
+## Stand
+
+Die Verarbeitung vom Beispielfoto über echte GPU-Inferenz bis zum Download geschlossener STL- und 3MF-Dateien ist im Projekt dokumentiert. Auch die beiden Reparaturwege wurden durchlaufen. Vor einem Druck müssen Wandstärken, lose Teile und nötige Stützen weiter geprüft werden. Der Quellcode ist öffentlich.

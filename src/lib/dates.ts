@@ -1,6 +1,8 @@
-export function formatMonthYear(date: Date): string {
+import type { Locale } from './locale';
+
+export function formatMonthYear(date: Date, locale: Locale = 'de'): string {
   return date
-    .toLocaleDateString('de-DE', {
+    .toLocaleDateString(locale === 'en' ? 'en-GB' : 'de-DE', {
       month: 'short',
       year: 'numeric',
       timeZone: 'UTC',

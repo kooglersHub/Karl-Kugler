@@ -1,10 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#19392d"/>
-  <g fill="#f3efe2" font-family="Arial,sans-serif">
-    <text x="70" y="80" font-size="24" font-weight="700">Karl Kugler — Freelancer</text>
-    <text x="70" y="235" font-size="100" font-weight="700" letter-spacing="-5">Websites. Technik.</text>
-    <text x="70" y="350" font-size="100" font-weight="700" letter-spacing="-5">Mittendrin.</text>
-    <text x="70" y="525" font-size="24">Karlsruhe · Deutsch &amp; Englisch</text>
-  </g>
-  <path d="M70 470h1060" stroke="#d7c39a"/>
+  <path fill="#f5f3eb" d="M0 0h1200v630H0z"/>
+  <path fill="#d9e768" d="M66 67h20v20H66z"/>
+  <path stroke="#bdbfb2" d="M66 108h1068M66 535h1068"/>
+  <text fill="#50594e" x="102" y="84" font-family="monospace" font-size="22">Karlsruhe / KIT</text>
+  <text fill="#222820" x="60" y="320" font-family="Georgia,serif" font-size="138">Karl Kugler</text>
+  <text fill="#222820" x="68" y="406" font-family="Arial,sans-serif" font-size="31">Mechatronik und Informationstechnik</text>
+  <text fill="#50594e" x="68" y="584" font-family="monospace" font-size="22">Robotics / Simulation / Software / Design</text>
 </svg>
